@@ -43,4 +43,3 @@ export const useEdgeUpdate = (edgeService, edges, setEdges) => {
     
     return {onEdgeClick, handleEdgeEditionModalClose, handleEdgeLabelChange, handleEdgeDelete, edgeEditionModalOpen, currentEdge};
 };
-

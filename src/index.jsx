@@ -3,20 +3,31 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import GraphEditor from './GraphEditor';
 import GraphNavigator from './GraphNavigator';
-import "./GraphEditor.css";
 import '@xyflow/react/dist/style.css';
 import '@clayui/css/lib/css/atlas.css';
+import "./GraphEditor.css";
 
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';
 import EdgeService from './services/EdgeService';
 
 import {
-    ReactFlowProvider,
+    ReactFlowProvider
   } from '@xyflow/react';
+
+/* Web component wrapper for the editor and navigator
+
+This file defines two custom elements: `<graph-editor>` and `<graph-navigator>`.
+Each element reads configuration attributes from its DOM node (object names, field names, relationships and URLs)
+and constructs service instances (`TreeService`, `NodeService`, `EdgeService`) which are then passed into the corresponding React components.
+
+Note: In production the `portal-base-url` attribute is expected to be injected by Liferay (e.g. via server-side template).
+During local development that attribute may be missing or contain template placeholders.
+Code elsewhere should fall back to a sane default.*/
 
 class GraphEditorWebComponent extends HTMLElement {
 
+    // Default base for Liferay Headless endpoints used as a fallback
     baseURL = "http://localhost:8080/o/c/";
 
     constructor() {
@@ -53,6 +64,7 @@ class GraphEditorWebComponent extends HTMLElement {
             const nodeObjectNamePlural = this.querySelector("node").getAttribute('object-name-plural');
             const nodeTitle = this.querySelector("node").getAttribute('label');
             const nodeText = this.querySelector("node").getAttribute('text');
+            const nodeImage = this.querySelector("node").getAttribute('image');
             const nodeRoot = this.querySelector("node").getAttribute('root');
             const xPosition = this.querySelector("node").getAttribute('x');
             const yPosition = this.querySelector("node").getAttribute('y');
@@ -78,6 +90,11 @@ class GraphEditorWebComponent extends HTMLElement {
             const treeNodesRelationshipId = 'r_' + treeNodesRelationshipName + '_c_' + treeObjectName + 'Id';
             const treeEdgesRelationshipId = 'r_' + treeEdgesRelationshipName + '_c_' + treeObjectName + 'Id';
 
+            /* Read portal base url from the element attribute. In
+            a Liferay environment this should be provided by the
+            server; for local dev it may be undefined and higher
+            level code uses `this.baseURL` as a fallback where
+            appropriate. */
             const portalBaseUrl = this.getAttribute("portal-base-url");
 
             this._rootInstance.render(
@@ -87,7 +104,7 @@ class GraphEditorWebComponent extends HTMLElement {
                         nodeDptBaseUrl={nodeDptBaseUrl}
                         treeId={null}
                         treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-                        nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeRoot, xPosition, yPosition)}
+                        nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
                         edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
                     />
                 </ReactFlowProvider>
@@ -135,6 +152,7 @@ class GraphNavigatorWebComponent extends HTMLElement {
             const nodeObjectNamePlural = this.querySelector("node").getAttribute('object-name-plural');
             const nodeTitle = this.querySelector("node").getAttribute('label');
             const nodeText = this.querySelector("node").getAttribute('text');
+            const nodeImage = this.querySelector("node").getAttribute('image');
             const nodeRoot = this.querySelector("node").getAttribute('root');
             const xPosition = this.querySelector("node").getAttribute('x');
             const yPosition = this.querySelector("node").getAttribute('y');
@@ -170,7 +188,7 @@ class GraphNavigatorWebComponent extends HTMLElement {
                     nodeDptBaseUrl={nodeDptBaseUrl}
                     treeERC={treeERC}
                     treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-                    nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeRoot, xPosition, yPosition)}
+                    nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
                     edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
                 />
             );

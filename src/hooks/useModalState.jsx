@@ -46,9 +46,9 @@ export const useModalState = (nodeService, edgeService, nodes, setNodes, edges, 
       const handleNodeCreationModalClose = () => {
         setNodeCreationModalOpen(false);
       }
-    
-      const handleNodeCreation = (edgeLabel, nodeTitle, nodeText) => {
-        nodeService.createNode(nodeTitle, nodeText).then(newNodeData => {
+
+      const handleNodeCreation = (edgeLabel, nodeTitle, nodeText, nodeImage) => {
+        nodeService.createNode(nodeTitle, nodeText, nodeImage).then(newNodeData => {
     
           const newNode = {
             id: '' + newNodeData.id,

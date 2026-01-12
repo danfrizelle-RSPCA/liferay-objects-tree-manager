@@ -50,7 +50,7 @@ export const useNodeUpdate = (nodeService, nodes, setNodes) => {
 
     }
 
-    const handleNodeUpdate = (nodeTitle, nodeText) => {
+    const handleNodeUpdate = (nodeTitle, nodeText, nodeImage) => {
 
         if (currentNode) {
             const updatedNodes = nodes.map((node) => {
@@ -60,14 +60,15 @@ export const useNodeUpdate = (nodeService, nodes, setNodes) => {
                     data: { 
                         ...node.data,  // Keep other properties in data intact
                         nodeTitle: nodeTitle, 
-                        nodeText: nodeText 
+                        nodeText: nodeText,
+                        nodeImage: nodeImage
                     }
                 };
               }
               return node;
             });
-        
-            nodeService.updateNode(currentNode.id, nodeTitle, nodeText);
+
+            nodeService.updateNode(currentNode.id, nodeTitle, nodeText, nodeImage);
             setNodes(updatedNodes);
           }
 

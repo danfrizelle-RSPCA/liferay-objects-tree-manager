@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import { Handle, Position } from '@xyflow/react';
-import ClayPanel from '@clayui/panel';
+import { Handle, Position } from "@xyflow/react";
+import ClayPanel from "@clayui/panel";
 
 function CustomNode({ data, isConnectable }) {
-
   return (
     <div className="custom-node">
       <Handle
@@ -13,20 +12,17 @@ function CustomNode({ data, isConnectable }) {
         isConnectable={isConnectable}
       />
 
-      <ClayPanel
-        displayTitle={data.nodeTitle + (data.nodeRoot ? ' [ROOT]' : '')}
-        displayType="secondary"
+      <div
+        className="custom-node-inner"
         style={{
-          marginBottom: 0,
-          width: '240px',
-          height: '180px',
-          overflow: 'hidden'
+          border: data.nodeRoot ? "1px solid red" : undefined,
         }}
       >
-        <ClayPanel.Body>
-          {data.nodeText}
-        </ClayPanel.Body>
-      </ClayPanel>
+        <h3 className="font-weight-normal">
+          {data.nodeTitle}{data.nodeRoot && <span style={{ color: "red" }}> *</span>}
+        </h3>
+        {/* {data.nodeText && <p style={{ margin: 0 }}>{data.nodeText}</p>} */}
+      </div>
 
       <Handle
         type="source"

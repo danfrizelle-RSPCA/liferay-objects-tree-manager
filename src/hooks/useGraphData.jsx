@@ -4,11 +4,18 @@ import {
     useEdgesState,
   } from '@xyflow/react';
 
+/* Hook: useGraphData
+Purpose: manage React Flow nodes/edges for the editable GraphEditor.
+- uses `useNodesState` / `useEdgesState` from @xyflow/react
+- exposes `loadGraphData(treeId, setLoading)` to fetch nodes then edges, updates state, and calls `fitView()` to center the graph
+- exposes `wipeGraphData()` to clear the canvas when no treeId is set */
 
 export const useGraphData = (nodeService, edgeService, fitView) => {
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
+  /* wipeGraphData: clear nodes and edges (used when no tree is selected).
+  Kept as a named callback to avoid recreating functions on each render. */
   const wipeGraphData = useCallback(() => {
 
     setNodes([]);
@@ -17,7 +24,10 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
   });
 
   const loadGraphData = useCallback((treeId, setLoading) => {
+    // show loader in calling component
     setLoading(true);
+
+    // fetch nodes, then edges, then update React Flow state
     nodeService.getNodes(treeId).then(nodeData => {
       const nodes = nodeData.map(node => ({
         id: '' + node.id,
@@ -27,6 +37,7 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
         data: { 
           nodeTitle: node.nodeTitle,
           nodeText: node.nodeText,
+          nodeImage: node.nodeImage,
           nodeRoot: node.nodeRoot,
           treeId: treeId,
           id: node.id
@@ -45,6 +56,7 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
           }
         }));
 
+        // update state and center view
         setLoading(false);
         setNodes(nodes);
         setEdges(edges);

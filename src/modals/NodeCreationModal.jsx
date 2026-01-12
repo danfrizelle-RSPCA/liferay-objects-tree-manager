@@ -13,6 +13,7 @@ function NodeCreationModal(props) {
   const [edgeLabel, setEdgeLabel] = useState('');
   const [nodeTitle, setNodeTitle] = useState('');
   const [nodeText, setNodeText] = useState('');
+  const [nodeImage, setNodeImage] = useState('');
 
   const handleEdgeLabelChange = function(event) {
     setEdgeLabel(event.target.value);
@@ -24,6 +25,10 @@ function NodeCreationModal(props) {
 
   const handleNodeTextChange = function(event) {
     setNodeText(event.target.value);
+  }
+
+  const handleNodeImageChange = function(event) {
+    setNodeImage(event.target.value);
   }
 
   return (
@@ -66,7 +71,18 @@ function NodeCreationModal(props) {
                 onChange={handleNodeTextChange}
                 type="text"
               />
-            </ClayForm.Group>                   
+            </ClayForm.Group>  
+            <ClayForm.Group>
+              <label htmlFor="nodeImage">Node Image</label>
+              <ClayInput
+                id="nodeImage"
+                placeholder="Insert an image URL for the Node"
+                value={nodeImage}
+                // component="select"
+                onChange={handleNodeImageChange}
+                type="text"
+              />
+            </ClayForm.Group>                 
           </ClayModal.Body>
           <ClayModal.Footer
             last={

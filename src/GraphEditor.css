@@ -1,0 +1,40 @@
+.center-panel {
+    position: absolute;
+    z-index: 5;
+    margin: 0;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 400px;
+
+    background: #FFFFFF;
+    padding: 4rem;
+
+}
+
+.custom-node-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 175px;
+    height: 175px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 1rem;
+    box-shadow: 0 4px 16px 0 rgba(39, 40, 51, 0.40);
+}
+
+.edge-label-container {
+    position: absolute;
+    background: #FFFFFF;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: all;
+    border: 1px solid #000000;
+}

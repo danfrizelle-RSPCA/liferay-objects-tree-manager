@@ -1,11 +1,7 @@
-import { useState, useCallback } from 'react';
-import {
-  addEdge,
-} from '@xyflow/react';
-
+import { useState, useCallback } from "react";
+import { addEdge } from "@xyflow/react";
 
 export const useEdgeCreation = (edgeService, setEdges, treeId) => {
-
   const [edgeCreationModalOpen, setEdgeCreationModalOpen] = useState(false);
   const [params, setParams] = useState(null);
 
@@ -14,7 +10,7 @@ export const useEdgeCreation = (edgeService, setEdges, treeId) => {
       setParams(params);
       setEdgeCreationModalOpen(true);
     },
-    [setEdges],
+    [setEdges]
   );
 
   const handleEdgeCreationModalClose = () => {
@@ -22,13 +18,23 @@ export const useEdgeCreation = (edgeService, setEdges, treeId) => {
   };
 
   const handleEdgeCreation = (edgeLabel) => {
+    const newEdge = {
+      ...params,
+      type: "custom",
+      data: {
+        label: edgeLabel,
+      },
+    };
 
-    params.label = edgeLabel;
-    setEdges((eds) => addEdge(params, eds));
+    setEdges((eds) => addEdge(newEdge, eds));
+
     edgeService.createEdge(treeId, params.source, params.target, edgeLabel);
+  };
 
-  }
-  
-  return { onConnect, handleEdgeCreationModalClose, handleEdgeCreation, edgeCreationModalOpen };
+  return {
+    onConnect,
+    handleEdgeCreationModalClose,
+    handleEdgeCreation,
+    edgeCreationModalOpen,
+  };
 };
-

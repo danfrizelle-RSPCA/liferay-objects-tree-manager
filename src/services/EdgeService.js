@@ -1,5 +1,7 @@
 import ApiService from './ApiService';
 
+/* EdgeService: handles CRUD for edge objects and label updates.
+Similar to NodeService, fields and relationship names are passed in the constructor so the service can be reused across schemas. */
 class EdgeService {
 
     constructor(baseURL, edgeObjectName, treeObjectName, treeEdgesRelationName, treeEdgesRelationId, sourceRelationId, targetRelationId, edgeLabel) {
@@ -13,6 +15,7 @@ class EdgeService {
         this.targetRelationId = targetRelationId;
     }
 
+    // getEdges: fetch all edges for a given tree and normalize field names
     getEdges(treeId) {
 
         return ApiService.makeCall(this.baseURL + this.treeObjectName + "/" + treeId + "/" + this.treeEdgesRelationName + "/?pageSize=500&fields=id%2C" + this.edgeLabel + "%2C" + this.targetRelationId + "%2C" + this.sourceRelationId, "GET").then(data => {
@@ -26,12 +29,14 @@ class EdgeService {
 
     }
 
+    // deleteEdge: remove an edge by id
     deleteEdge(edgeId) {
 
         return ApiService.makeCall(this.baseURL + this.edgeObjectName + "/" + edgeId, "DELETE")
 
     }
 
+    // updateEdgeLabel: patch the edge label field
     updateEdgeLabel(edgeId, newLabel) {
 
         const body = {

@@ -1,0 +1,10 @@
+{
+  "configurationPath": "configuration.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "button",
+  "name": "Form Button with Post Message",
+  "typeOptions": {"fieldTypes": ["formButton"]},
+  "type": "input"
+}
