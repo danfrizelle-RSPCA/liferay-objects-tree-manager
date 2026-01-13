@@ -81,6 +81,7 @@ function NodeCreationModal(props) {
                 // component="select"
                 onChange={handleNodeImageChange}
                 type="text"
+                readOnly
               />
             </ClayForm.Group>                 
           </ClayModal.Body>

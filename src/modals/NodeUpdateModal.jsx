@@ -83,6 +83,7 @@ function NodeUpdateModal(props) {
             id="nodeImage"
             placeholder="Select an image from Documents and Media"
             value={nodeImage?.link?.href}
+            readOnly
           />
         </ClayForm.Group>
       </ClayModal.Body>
