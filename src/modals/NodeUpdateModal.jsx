@@ -18,10 +18,6 @@ function NodeUpdateModal(props) {
   const [nodeImage, setNodeImage] = useState(null);
   const [nodeRoot, setNodeRoot] = useState(false);
 
-  const [documents, setDocuments] = useState([]);
-  const [docModalOpen, setDocModalOpen] = useState(false);
-  const [loadingDocs, setLoadingDocs] = useState(false);
-
   useEffect(() => {
     setNodeTitle(props.nodeTitle);
     setNodeText(props.nodeText);
@@ -50,105 +46,6 @@ function NodeUpdateModal(props) {
   const handleNodeTextChange = (event) => setNodeText(event.target.value);
 
   if (!props.open) return null;
-
-  // ---------------------------
-  // DOCUMENTS & MEDIA HANDLER
-  // ---------------------------
-  const openDocumentsAndMedia = () => {
-    setDocModalOpen(true);
-    fetchDocuments();
-  };
-
-  const fetchDocuments = async () => {
-    try {
-      setLoadingDocs(true);
-
-      const themeDisplay = Liferay.ThemeDisplay;
-      const groupId = themeDisplay.getScopeGroupId();
-
-      const csrfToken = Liferay.authToken; // required for POST/PUT/DELETE, but some GETs also need it
-
-      const response = await fetch(
-        `/o/headless-delivery/v1.0/sites/${groupId}/documents?pageSize=50`,
-        {
-          headers: {
-            Accept: "application/json",
-            "X-CSRF-Token": csrfToken,
-          },
-          credentials: "include", // important: send cookies/session info
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Error fetching documents: ${response.status} ${response.statusText}`
-        );
-      }
-
-      const data = await response.json();
-      console.log(data);
-      setDocuments(data.items || []);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoadingDocs(false);
-    }
-  };
-
-  const handleDocumentSelect = (doc) => {
-    setNodeImage({
-      fileEntryId: doc.id,
-      title: doc.title,
-      mimeType: doc.contentType,
-      link: { href: doc.contentUrl },
-    });
-    setDocModalOpen(false);
-  };
-
-  const renderDocumentPicker = () => {
-    if (!docModalOpen) return null;
-
-    return (
-      <ClayModal observer={observer} size="md" status="info">
-        <ClayModal.Header>Select Image</ClayModal.Header>
-        <ClayModal.Body>
-          {loadingDocs ? (
-            <p>Loading documents...</p>
-          ) : documents.length === 0 ? (
-            <p>No documents found</p>
-          ) : (
-            <ul style={{ listStyle: "none", padding: 0 }}>
-              {documents.map((doc) => (
-                <li
-                  key={doc.id}
-                  style={{
-                    marginBottom: "8px",
-                    cursor: "pointer",
-                    border: "1px solid #ddd",
-                    borderRadius: "4px",
-                    padding: "5px",
-                  }}
-                  onClick={() => handleDocumentSelect(doc)}
-                >
-                  {doc.title}
-                </li>
-              ))}
-            </ul>
-          )}
-        </ClayModal.Body>
-        <ClayModal.Footer
-          last={
-            <ClayButton
-              displayType="secondary"
-              onClick={() => setDocModalOpen(false)}
-            >
-              Cancel
-            </ClayButton>
-          }
-        />
-      </ClayModal>
-    );
-  };
 
   const renderBody = () => {
     if (advanced && dptUrl) {
@@ -185,17 +82,9 @@ function NodeUpdateModal(props) {
           <ClayInput
             id="nodeImage"
             placeholder="Select an image from Documents and Media"
-            value={nodeImage?.link?.href || ""}
-            readOnly
-            type="text"
+            value={nodeImage?.link?.href}
           />
         </ClayForm.Group>
-
-        <ClayButton displayType="secondary" onClick={openDocumentsAndMedia}>
-          Select image
-        </ClayButton>
-
-        {renderDocumentPicker()}
       </ClayModal.Body>
     );
   };
