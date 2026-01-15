@@ -44,7 +44,7 @@ function GraphNavigator(props) {
               />
             )}
             <h2>{node.nodeTitle}</h2>
-            <p>Text: {node.nodeText}</p>
+            <div dangerouslySetInnerHTML={{ __html: node.nodeText }}/>
             
             <ClayButton.Group spaced>
 
