@@ -1,43 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import ClayButton from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayButton from "@clayui/button";
+import ClayModal, { useModal } from "@clayui/modal";
+import ClayForm, { ClayInput } from "@clayui/form";
 
 function EdgeCreationModal(props) {
-
   const { observer, onOpenChange, open, onClose } = useModal({
-    onClose: props.onClose
+    onClose: props.onClose,
   });
 
-  const [edgeLabel, setEdgeLabel] = useState('');
+  const [edgeLabel, setEdgeLabel] = useState("");
 
-  const handleEdgeLabelChange = function(event) {
+  const handleEdgeLabelChange = function (event) {
     setEdgeLabel(event.target.value);
-  }
-  
+  };
+
   return (
     <>
       {props.open && (
-        <ClayModal
-          observer={observer}
-          size="lg"
-          status="info"
-        >
-          <ClayModal.Header>Create a new Edge</ClayModal.Header>
+        <ClayModal observer={observer} size="lg" status="info">
+          <ClayModal.Header>Create a new Answer</ClayModal.Header>
           <ClayModal.Body>
             <ClayForm.Group>
-              <label htmlFor="nodeLabel">Label</label>
+              <label htmlFor="nodeLabel">Answer Name</label>
               <ClayInput
                 id="nodeLabel"
-                placeholder="Choose a label for the Edge"
+                placeholder="Choose a name for the Answer"
                 onChange={handleEdgeLabelChange}
                 type="text"
               />
             </ClayForm.Group>
           </ClayModal.Body>
           <ClayModal.Footer
-            last={
+            first={
               <ClayButton.Group spaced>
                 <ClayButton
                   displayType="secondary"
@@ -45,11 +40,17 @@ function EdgeCreationModal(props) {
                 >
                   Cancel
                 </ClayButton>
-                <ClayButton onClick={() => {
-                  props.onEdgeCreation(edgeLabel);
-                  setEdgeLabel('');
-                  onOpenChange(false);
-                }}>
+              </ClayButton.Group>
+            }
+            last={
+              <ClayButton.Group spaced>
+                <ClayButton
+                  onClick={() => {
+                    props.onEdgeCreation(edgeLabel);
+                    setEdgeLabel("");
+                    onOpenChange(false);
+                  }}
+                >
                   Save changes
                 </ClayButton>
               </ClayButton.Group>
@@ -60,5 +61,5 @@ function EdgeCreationModal(props) {
     </>
   );
 }
-  
+
 export default EdgeCreationModal;

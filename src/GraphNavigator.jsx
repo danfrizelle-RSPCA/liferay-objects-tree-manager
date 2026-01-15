@@ -7,6 +7,7 @@ import { useBrowseGraphData } from "./hooks/useBrowseGraphData";
 
 function GraphNavigator(props) {
   const [loading, setLoading] = useState(true);
+  console.log("Loading state:", loading);
   const [currentNodeId, setCurrentNodeId] = useState(null);
   const [dptUrl, setDptUrl] = useState(null);
 
@@ -15,9 +16,14 @@ function GraphNavigator(props) {
     props.nodeService,
     props.edgeService
   );
+  console.log("Nodes:", nodes);
+  console.log("Edges:", edges);
+  console.log("Start Node ID:", startNodeId);
+
 
   useEffect(() => {
     loadGraphData(props.treeERC, setLoading);
+    console.log("Props changed, loading graph data:", props);
   }, [props]);
 
   useEffect(() => {

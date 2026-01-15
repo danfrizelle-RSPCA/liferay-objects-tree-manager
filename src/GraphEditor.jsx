@@ -292,7 +292,7 @@ function GraphEditor(props) {
       />
       <NodeUpdateModal
         nodeDptBaseUrl={props.nodeDptBaseUrl}
-        open={nodeUpdateModalOpen && !loading}
+        open={nodeUpdateModalOpen && !loading} //open={nodeUpdateModalOpen && !loading || import.meta.env.DEV}
         currentNode={currentNode}
         loadGraphData={loadGraphData}
         nodeRoot={currentNode ? currentNode.data.nodeRoot : false}

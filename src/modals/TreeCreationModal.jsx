@@ -24,27 +24,31 @@ function TreeCreationModal(props) {
           size="lg"
           status="info"
         >
-          <ClayModal.Header>Create tree</ClayModal.Header>
+          <ClayModal.Header>Create a flow</ClayModal.Header>
           <ClayModal.Body>
             <ClayForm.Group>
-              <label htmlFor="treeLabel">Tree Title</label>
+              <label htmlFor="treeLabel">Flow Name</label>
               <ClayInput
                 id="treeLabel"
-                placeholder="Choose a label for the Tree"
+                placeholder="Choose a label for the Flow"
                 onChange={handleTreeLabelChange}
                 type="text"
               />              
             </ClayForm.Group>        
           </ClayModal.Body>
           <ClayModal.Footer
+          first={
+            <ClayButton.Group spaced>
+              <ClayButton
+                displayType="secondary"
+                onClick={() => onOpenChange(false)}
+              >
+                Cancel
+              </ClayButton>
+            </ClayButton.Group>
+          }
             last={
               <ClayButton.Group spaced>
-                <ClayButton
-                  displayType="secondary"
-                  onClick={() => onOpenChange(false)}
-                >
-                  Cancel
-                </ClayButton>
                 <ClayButton onClick={() => {
                   props.onTreeCreation(treeLabel);
                   onOpenChange(false);

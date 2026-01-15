@@ -37,11 +37,11 @@ function TreeSelectionModal(props) {
           size="lg"
           status="info"
         >
-          <ClayModal.Header>Select tree</ClayModal.Header>
+          <ClayModal.Header>Select a flow</ClayModal.Header>
           <ClayModal.Body>
             <ClayForm.Group>
-              <label htmlFor="treeSelect">Tree Title</label>
-              <ClaySelect aria-label="Select Tree" id="treeSelect" value={treeId} onChange={handleTreeChange}>
+              <label htmlFor="treeSelect">Flow Name</label>
+              <ClaySelect aria-label="Select Flow" id="treeSelect" value={treeId} onChange={handleTreeChange}>
                 {trees.map(item => (
                   <ClaySelect.Option
                     key={item.id}
@@ -53,14 +53,19 @@ function TreeSelectionModal(props) {
             </ClayForm.Group>        
           </ClayModal.Body>
           <ClayModal.Footer
-            last={
-              <ClayButton.Group spaced>
-                <ClayButton
+          first={
+            <ClayButton.Group spaced>
+              <ClayButton
                   displayType="secondary"
                   onClick={() => onOpenChange(false)}
                 >
                   Cancel
-                </ClayButton>
+              </ClayButton>
+            </ClayButton.Group>
+          }
+            last={
+              <ClayButton.Group spaced>
+                
                 <ClayButton onClick={() => {
                   props.onTreeSelection(treeId);
                   onOpenChange(false);

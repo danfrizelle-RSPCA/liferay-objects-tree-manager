@@ -18,28 +18,32 @@ function TreeDeletionModal(props) {
           size="lg"
           status="info"
         >
-          <ClayModal.Header>Delete tree</ClayModal.Header>
+          <ClayModal.Header>Delete a flow</ClayModal.Header>
           <ClayModal.Body>
             <ClayForm.Group>
-              <label htmlFor="treeLabel">Tree Title</label>
+              <label htmlFor="treeLabel">Flow Name</label>
               <ClayInput
                 id="treeLabel"
                 disabled={true}
-                placeholder="Choose a label for the Tree"
+                placeholder="Choose a label for the Flow"
                 type="text"
                 value={props.treeLabel}
               />              
             </ClayForm.Group>        
           </ClayModal.Body>
           <ClayModal.Footer
-            last={
+            first={
               <ClayButton.Group spaced>
                 <ClayButton
-                  displayType="secondary"
-                  onClick={() => onOpenChange(false)}
-                >
-                  Cancel
+                    displayType="secondary"
+                    onClick={() => onOpenChange(false)}
+                  >
+                    Cancel
                 </ClayButton>
+              </ClayButton.Group>
+            }
+            last={
+              <ClayButton.Group spaced>
                 <ClayButton 
                   displayType="danger"
                   onClick={() => {
