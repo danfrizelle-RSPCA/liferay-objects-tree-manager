@@ -29,7 +29,7 @@
           }
 
           window.Liferay.Util.fetch = function (url, options = {}) {
-              const basicAuth = "Basic " + btoa("test@liferay.com:test1234");
+              const basicAuth = "Basic " + btoa("dan.frizelle@rspca.org.uk:Hajtleb9!");
 
               const headers = new Headers(options.headers || {});
               headers.set("Authorization", basicAuth);
@@ -55,31 +55,31 @@
 
   </head>
   <body>
-
     <script type="module" src="/src/index.jsx"></script> 
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
-    <graph-navigator
-      portal-base-url="http://localhost:8080/o/c/"
-      edge-dpt-base-url="/web/trees/e/"
-      node-dpt-base-url="/web/trees/e/node-display-dpt/42493/"
-      tree-erc="e8d5445a-5be9-fb83-77ac-6d20937d8899"
-      >
-        <tree object-name="tree" object-name-plural="trees" label="name" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
-        <node object-name="node" object-name-plural="nodes" label="name" text="description" root="root" x="xCoordinates" y="yCoordinates" />
-        <edge object-name="edge" object-name-plural="edges" label="name" source-relationship="source" target-relationship="target" />
-    </graph-navigator>
+    <!-- Graph Navigator Component (for local use)
+    <graph-navigator 
+        portal-base-url="http://localhost:8080/o/c/"
+        edge-dpt-base-url="/web/guest/e/"
+        node-dpt-base-url="/web/guest/e/dt_node-display/35805/"
+        tree-erc="6442d65a-0e44-fc4a-90b3-69bbc99186e9"
+    >
+      <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
+      <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
+      <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
+    </graph-navigator> -->
 
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <!-- Graph Editor Component (for local use) -->
+    <graph-editor
+        portal-base-url="http://localhost:8080/o/c/"
+        edge-dpt-base-url="/web/guest/e/dt_edge-editor/35880/"
+        node-dpt-base-url="/web/guest/e/dt_node-editor/35805/"
+    >
+      <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
+      <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
+      <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
+    </graph-editor>
   </body>
 </html>
