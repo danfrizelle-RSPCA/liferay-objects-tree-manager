@@ -40,9 +40,9 @@ export const useNodeCreation = (
     setNodeCreationModalOpen(false);
   };
 
-  const handleNodeCreation = (edgeLabel, nodeTitle, nodeText, nodeImage) => {
+  const handleNodeCreation = (edgeLabel, nodeTitle, nodeText, nodeImage, accordion1Heading, accordion1Content, accordion2Heading, accordion2Content, accordion3Heading, accordion3Content) => {
     nodeService
-      .createNode(treeId, nodeTitle, nodeText, nodeImage, xPosition, yPosition)
+      .createNode(treeId, nodeTitle, nodeText, nodeImage, xPosition, yPosition, accordion1Heading, accordion1Content, accordion2Heading, accordion2Content, accordion3Heading, accordion3Content)
       .then((newNodeData) => {
         const newNode = {
           id: "" + newNodeData.id,
@@ -56,6 +56,12 @@ export const useNodeCreation = (
             nodeTitle: nodeTitle,
             nodeText: nodeText,
             nodeImage: nodeImage,
+            accordion1Heading: accordion1Heading,
+            accordion1Content: accordion1Content,
+            accordion2Heading: accordion2Heading,
+            accordion2Content: accordion2Content,
+            accordion3Heading: accordion3Heading,
+            accordion3Content: accordion3Content,
             id: newNodeData.id,
           },
         };

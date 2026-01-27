@@ -3,17 +3,12 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import GraphEditor from './GraphEditor';
 import GraphNavigator from './GraphNavigator';
-import '@xyflow/react/dist/style.css';
-import '@clayui/css/lib/css/atlas.css';
-import "./GraphEditor.css";
 
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';
 import EdgeService from './services/EdgeService';
 
-import {
-    ReactFlowProvider
-  } from '@xyflow/react';
+import { ReactFlowProvider } from '@xyflow/react';
 
 /* Web component wrapper for the editor and navigator
 
@@ -104,7 +99,7 @@ class GraphEditorWebComponent extends HTMLElement {
                         nodeDptBaseUrl={nodeDptBaseUrl}
                         treeId={null}
                         treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-                        nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
+                        nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition, 'accordion1Heading', 'accordion1Content', 'accordion2Heading', 'accordion2Content', 'accordion3Heading', 'accordion3Content')}
                         edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
                     />
                 </ReactFlowProvider>
@@ -188,7 +183,7 @@ class GraphNavigatorWebComponent extends HTMLElement {
                     nodeDptBaseUrl={nodeDptBaseUrl}
                     treeERC={treeERC}
                     treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-                    nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
+                    nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition, 'accordion1Heading', 'accordion1Content', 'accordion2Heading', 'accordion2Content', 'accordion3Heading', 'accordion3Content')}
                     edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
                 />
             );

@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClayButton from "@clayui/button";
 
 import LoadingModal from "./modals/LoadingModal";
-
 import { useBrowseGraphData } from "./hooks/useBrowseGraphData";
+import DecisionScreen from "./components/DecisionScreen";
+import "./GraphNavigator.css";
 
 function GraphNavigator(props) {
   const [loading, setLoading] = useState(true);
-  console.log("Loading state:", loading);
+  // console.log(loading ? "Loading..." : "Loaded.");
   const [currentNodeId, setCurrentNodeId] = useState(null);
+  const [history, setHistory] = useState([]);
   const [dptUrl, setDptUrl] = useState(null);
 
   const { startNodeId, nodes, edges, loadGraphData } = useBrowseGraphData(
@@ -16,71 +18,64 @@ function GraphNavigator(props) {
     props.nodeService,
     props.edgeService
   );
-  console.log("Nodes:", nodes);
-  console.log("Edges:", edges);
-  console.log("Start Node ID:", startNodeId);
 
-
+  // Load graph data whenever treeERC changes
   useEffect(() => {
     loadGraphData(props.treeERC, setLoading);
-    console.log("Props changed, loading graph data:", props);
-  }, [props]);
+  }, [props.treeERC]);
 
+  // Update DPT URL whenever currentNodeId changes
   useEffect(() => {
-    setDptUrl(props.nodeDptBaseUrl + currentNodeId + "?p_p_state=pop_up");
+    if (currentNodeId) {
+      setDptUrl(props.nodeDptBaseUrl + currentNodeId + "?p_p_state=pop_up");
+    }
   }, [currentNodeId]);
 
+  // Initialize currentNodeId when startNodeId changes
   useEffect(() => {
+    setHistory([]); // clear history on new tree
     setCurrentNodeId(startNodeId);
-  }, [startNodeId]);
+  }, [startNodeId, props.treeERC]);
+
+  // Handle selecting a new node
+  const handleSelectNode = (targetNodeId) => {
+    if (currentNodeId != null) {
+      setHistory((prev) => [...prev, currentNodeId]);
+    }
+    setCurrentNodeId(targetNodeId);
+  };
+
+  // Handle going back
+  const handleBack = () => {
+    setHistory((prev) => {
+      if (prev.length === 0) return prev;
+
+      const newHistory = [...prev];
+
+      const previousNodeId = newHistory.pop();
+      setCurrentNodeId(previousNodeId);
+      return newHistory;
+    });
+  };
 
   return (
     <div>
       {nodes
-        .filter((node) => {
-          return node.id == currentNodeId;
-        })
+        .filter((node) => node.id == currentNodeId)
         .map((node) => (
           <>
-            {/* Hardcoded the layout for each node */}
-            {node.nodeImage?.link?.href && (
-              <img
-                src={'http://localhost:8080' + node.nodeImage.link.href}
-                alt={node.nodeImage?.link?.label ?? ""}
-              />
-            )}
-            <h2>{node.nodeTitle}</h2>
-            <div dangerouslySetInnerHTML={{ __html: node.nodeText }}/>
-            
-            <ClayButton.Group spaced>
-
-              {edges.filter(edge => {return edge.source == currentNodeId}).map(edge =>
-                (
-                  <ClayButton 
-                    displayType="secondary"
-                    onClick={() => {setCurrentNodeId(edge.target)}}
-                  >
-                    {edge.label}
-                  </ClayButton>
-
-                )
-              )}
-
-            </ClayButton.Group> 
-
-            {/* Allow editors to create a display page template a configure in Liferay */}
-            {/* {dptUrl != null && (
-              <iframe
-                src={dptUrl}
-                width="800"
-                height="600"
-                style={{ border: "none" }}
-                loading="lazy"
-              ></iframe>
-            )} */}
+            {console.log("Rendering DecisionScreen for node:", node)}
+            {console.log("Current Node ID:", currentNodeId)}
+            <DecisionScreen
+              key={node.id}
+              node={node}
+              edges={edges.filter((edge) => edge.source == currentNodeId)}
+              onSelect={handleSelectNode}
+              onBack={history.length > 0 ? handleBack : null} // show back only if history exists
+            />
           </>
         ))}
-      <LoadingModal open={loading} />
+      {loading && <LoadingModal />}
     </div>
   );
 }

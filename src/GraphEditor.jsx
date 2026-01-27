@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+import '@xyflow/react/dist/style.css';
+import '@clayui/css/lib/css/atlas.css';
+import "./GraphEditor.css";
+
 import {
   ReactFlow,
   MiniMap,
@@ -246,7 +250,7 @@ function GraphEditor(props) {
         </ReactFlow>
       </div>
 
-      <LoadingModal open={loading} />
+      {loading && <LoadingModal />}
       <TreeSelectionModal
         open={treeSelectionModalOpen && !loading}
         trees={trees}
@@ -289,6 +293,7 @@ function GraphEditor(props) {
         open={nodeCreationModalOpen && !loading}
         onClose={handleNodeCreationModalClose}
         onNodeCreation={handleNodeCreation}
+        outgoingEdgeCount={currentNode ? edges.filter(edge => edge.source === currentNode.id).length : 0}
       />
       <NodeUpdateModal
         nodeDptBaseUrl={props.nodeDptBaseUrl}
@@ -299,6 +304,13 @@ function GraphEditor(props) {
         nodeTitle={currentNode ? currentNode.data.nodeTitle : ""}
         nodeText={currentNode ? currentNode.data.nodeText : ""}
         nodeImage={currentNode ? currentNode.data.nodeImage : ""}
+        accordion1Heading={currentNode ? currentNode.data.accordion1Heading : ""}
+        accordion1Content={currentNode ? currentNode.data.accordion1Content : ""}
+        accordion2Heading={currentNode ? currentNode.data.accordion2Heading : ""}
+        accordion2Content={currentNode ? currentNode.data.accordion2Content : ""}
+        accordion3Heading={currentNode ? currentNode.data.accordion3Heading : ""}
+        accordion3Content={currentNode ? currentNode.data.accordion3Content : ""}
+        outgoingEdgeCount={currentNode ? edges.filter(edge => edge.source === currentNode.id).length : 0}
         onClose={handleNodeUpdateModalClose}
         onNodeSetAsStart={handleNodeSetAsStart}
         onNodeDeletion={handleNodeDelete}

@@ -12,6 +12,7 @@ class ApiService {
     - method: HTTP verb
     - body: optional JS object; if present it is JSON-stringified and sets `Content-Type: application/json` */
     static makeCall(url, method, body) {
+        console.log("API Call:", method, url, body ? body : "");
 
         let call = window.Liferay.Util
             .fetch(url, {
@@ -33,7 +34,7 @@ class ApiService {
 
         // This console.log helps during local dev to inspect API responses; callers generally rely on the resolved value.
         return call.then(data => {
-            console.log(data);
+            console.log("API CALL: Data...", data);
             return data;
         });
 

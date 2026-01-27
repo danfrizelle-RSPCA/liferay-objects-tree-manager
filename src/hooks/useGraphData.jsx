@@ -39,6 +39,12 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
           nodeText: node.nodeText,
           nodeImage: node.nodeImage,
           nodeRoot: node.nodeRoot,
+          accordion1Heading: node.accordion1Heading,
+          accordion1Content: node.accordion1Content,
+          accordion2Heading: node.accordion2Heading,
+          accordion2Content: node.accordion2Content,
+          accordion3Heading: node.accordion3Heading,
+          accordion3Content: node.accordion3Content,
           treeId: treeId,
           id: node.id
         }

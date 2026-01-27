@@ -50,7 +50,7 @@ export const useNodeUpdate = (nodeService, nodes, setNodes) => {
 
     }
 
-    const handleNodeUpdate = (nodeTitle, nodeText, nodeImage) => {
+    const handleNodeUpdate = (nodeTitle, nodeText, nodeImage, accordion1Heading, accordion1Content, accordion2Heading, accordion2Content, accordion3Heading, accordion3Content) => {
 
         if (currentNode) {
             const updatedNodes = nodes.map((node) => {
@@ -61,14 +61,20 @@ export const useNodeUpdate = (nodeService, nodes, setNodes) => {
                         ...node.data,  // Keep other properties in data intact
                         nodeTitle: nodeTitle, 
                         nodeText: nodeText,
-                        nodeImage: nodeImage
+                        nodeImage: nodeImage,
+                        accordion1Heading: accordion1Heading,
+                        accordion1Content: accordion1Content,
+                        accordion2Heading: accordion2Heading,
+                        accordion2Content: accordion2Content,
+                        accordion3Heading: accordion3Heading,
+                        accordion3Content: accordion3Content
                     }
                 };
               }
               return node;
             });
 
-            nodeService.updateNode(currentNode.id, nodeTitle, nodeText, nodeImage);
+            nodeService.updateNode(currentNode.id, nodeTitle, nodeText, nodeImage, accordion1Heading, accordion1Content, accordion2Heading, accordion2Content, accordion3Heading, accordion3Content);
             setNodes(updatedNodes);
           }
 

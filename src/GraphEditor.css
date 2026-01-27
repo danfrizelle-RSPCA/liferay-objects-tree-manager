@@ -27,9 +27,10 @@
 	min-width: 0;
 }
 
-/* .modal-open {
+/* Remove this and fix the underlying scroll issue (modal-open added to body) */
+.modal-open {
     overflow:scroll !important;
-} */
+}
 
 
 .center-panel {
