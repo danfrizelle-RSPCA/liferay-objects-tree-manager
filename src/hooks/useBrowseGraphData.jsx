@@ -8,7 +8,7 @@ Behavior notes:
 - sets `setLoading(true)` at start and `setLoading(false)` after nodes+edges are loaded or on any failure (see catch)
 - identifies the start node by checking `node.nodeRoot` and sets `startNodeId` accordingly */
 
-export const useBrowseGraphData = (treeService, nodeService, edgeService) => {
+export const useBrowseGraphData = (treeService, nodeService, accordionService, edgeService) => {
   const [startNodeId, setStartNodeId] = useState(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -28,13 +28,7 @@ export const useBrowseGraphData = (treeService, nodeService, edgeService) => {
           nodeTitle: node.nodeTitle,
           nodeText: node.nodeText,
           nodeImage: node.nodeImage,
-          nodeRoot: node.nodeRoot,
-          accordion1Heading: node.accordion1Heading,
-          accordion1Content: node.accordion1Content,
-          accordion2Heading: node.accordion2Heading,
-          accordion2Content: node.accordion2Content,
-          accordion3Heading: node.accordion3Heading,
-          accordion3Content: node.accordion3Content
+          nodeRoot: node.nodeRoot
         }));
 
         // pick the first node flagged as root (start node)
@@ -66,7 +60,7 @@ export const useBrowseGraphData = (treeService, nodeService, edgeService) => {
         // ignore if setLoading is not a function or component unmounted
       }
     });
-  }, [treeService, nodeService, edgeService]);
+  }, [treeService, nodeService, accordionService, edgeService]);
 
   return { startNodeId, nodes, edges, loadGraphData };
 };

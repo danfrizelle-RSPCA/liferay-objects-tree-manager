@@ -3,26 +3,23 @@ import ClayButton from "@clayui/button";
 
 import AccordionGroup from "./AccordionGroup";
 import { useScrollToTop } from "../hooks/useScrollToTop";
+import { useNodeAccordions } from "../hooks/useNodeAccordions";
 
-export default function DecisionScreen({ node, edges = [], onSelect, onBack }) {
+export default function DecisionScreen({ node, edges = [], onSelect, onBack, baseURL }) {
   const [selectedEdgeId, setSelectedEdgeId] = useState(null); // track selected option
   const [error, setError] = useState(""); // inline error message
 
   const decisionScreenRef = useRef(null);
   const scrollToTop = useScrollToTop(decisionScreenRef);
+  
+  // Load accordions for this node
+  const { accordions } = useNodeAccordions(baseURL, node?.id);
 
   if (!node) return null;
 
   const imageSrc = node.nodeImage?.link?.href
     ? "http://localhost:8080" + node.nodeImage.link.href
     : null;
-
-  // Transform accordion fields into array format for AccordionGroup
-  const accordionData = [
-    { title: node.accordion1Heading, content: node.accordion1Content },
-    { title: node.accordion2Heading, content: node.accordion2Content },
-    { title: node.accordion3Heading, content: node.accordion3Content }
-  ].filter(item => item.title && item.content); // Only include accordions that have both title and content
 
   const handleBack = () => {
     scrollToTop();
@@ -65,7 +62,9 @@ export default function DecisionScreen({ node, edges = [], onSelect, onBack }) {
               {node.nodeText && (
                 <div dangerouslySetInnerHTML={{ __html: node.nodeText }} />
               )}
-              <AccordionGroup accordionData={accordionData} />
+              {accordions && accordions.length > 0 && (
+                <AccordionGroup accordionData={accordions} />
+              )}
             </>
           )}
 

@@ -62,12 +62,6 @@ function NodeCreationModal(props) {
   const [nodeTitle, setNodeTitle] = useState('');
   const [nodeText, setNodeText] = useState('');
   const [nodeImage, setNodeImage] = useState('');
-  const [accordion1Heading, setAccordion1Heading] = useState('');
-  const [accordion1Content, setAccordion1Content] = useState('');
-  const [accordion2Heading, setAccordion2Heading] = useState('');
-  const [accordion2Content, setAccordion2Content] = useState('');
-  const [accordion3Heading, setAccordion3Heading] = useState('');
-  const [accordion3Content, setAccordion3Content] = useState('');
 
   const handleEdgeLabelChange = function(event) {
     setEdgeLabel(event.target.value);
@@ -79,30 +73,6 @@ function NodeCreationModal(props) {
 
   const handleNodeImageChange = function(event) {
     setNodeImage(event.target.value);
-  }
-
-  const handleAccordion1HeadingChange = function(event) {
-    setAccordion1Heading(event.target.value);
-  }
-
-  const handleAccordion1ContentChange = function(event, editor) {
-    setAccordion1Content(editor.getData());
-  }
-
-  const handleAccordion2HeadingChange = function(event) {
-    setAccordion2Heading(event.target.value);
-  }
-
-  const handleAccordion2ContentChange = function(event, editor) {
-    setAccordion2Content(editor.getData());
-  }
-
-  const handleAccordion3HeadingChange = function(event) {
-    setAccordion3Heading(event.target.value);
-  }
-
-  const handleAccordion3ContentChange = function(event, editor) {
-    setAccordion3Content(editor.getData());
   }
 
   return (
@@ -157,97 +127,7 @@ function NodeCreationModal(props) {
                 type="text"
                 readOnly
               />
-            </ClayForm.Group>
-
-            {props.outgoingEdgeCount === 0 && (
-            <ClayPanel.Group>
-              <ClayPanel
-                displayTitle="Accordion 1"
-                displayType="secondary"
-                collapsible
-                expanded={false}
-              >
-                <ClayPanel.Body>
-                  <ClayForm.Group>
-                    <label htmlFor="accordion1Heading">Heading</label>
-                    <ClayInput
-                      id="accordion1Heading"
-                      placeholder="Heading for first accordion"
-                      value={accordion1Heading}
-                      onChange={handleAccordion1HeadingChange}
-                      type="text"
-                    />
-                  </ClayForm.Group>
-                  <ClayForm.Group>
-                    <label>Content</label>
-                    <CKEditor
-                      editor={ClassicEditor}
-                      config={editorConfig}
-                      data={accordion1Content || ""}
-                      onChange={handleAccordion1ContentChange}
-                    />
-                  </ClayForm.Group>
-                </ClayPanel.Body>
-              </ClayPanel>
-
-              <ClayPanel
-                displayTitle="Accordion 2"
-                displayType="secondary"
-                collapsible
-                expanded={false}
-              >
-                <ClayPanel.Body>
-                  <ClayForm.Group>
-                    <label htmlFor="accordion2Heading">Heading</label>
-                    <ClayInput
-                      id="accordion2Heading"
-                      placeholder="Heading for second accordion"
-                      value={accordion2Heading}
-                      onChange={handleAccordion2HeadingChange}
-                      type="text"
-                    />
-                  </ClayForm.Group>
-                  <ClayForm.Group>
-                    <label>Content</label>
-                    <CKEditor
-                      editor={ClassicEditor}
-                      config={editorConfig}
-                      data={accordion2Content || ""}
-                      onChange={handleAccordion2ContentChange}
-                    />
-                  </ClayForm.Group>
-                </ClayPanel.Body>
-              </ClayPanel>
-
-              <ClayPanel
-                displayTitle="Accordion 3"
-                displayType="secondary"
-                collapsible
-              >
-                <ClayPanel.Body>
-                  <ClayForm.Group>
-                    <label htmlFor="accordion3Heading">Heading</label>
-                    <ClayInput
-                      id="accordion3Heading"
-                      placeholder="Heading for third accordion"
-                      value={accordion3Heading}
-                      onChange={handleAccordion3HeadingChange}
-                      type="text"
-                    />
-                  </ClayForm.Group>
-                  <ClayForm.Group>
-                    <label>Content</label>
-                    <CKEditor
-                      editor={ClassicEditor}
-                      config={editorConfig}
-                      data={accordion3Content || ""}
-                      onChange={handleAccordion3ContentChange}
-                    />
-                  </ClayForm.Group>
-                </ClayPanel.Body>
-              </ClayPanel>
-            </ClayPanel.Group>   
-            )}              
+            </ClayForm.Group>         
           </ClayModal.Body>
           <ClayModal.Footer
           first={
@@ -264,17 +144,11 @@ function NodeCreationModal(props) {
               <ClayButton.Group spaced>
                 
                 <ClayButton onClick={() => {
-                  props.onNodeCreation(edgeLabel, nodeTitle, nodeText, nodeImage, accordion1Heading, accordion1Content, accordion2Heading, accordion2Content, accordion3Heading, accordion3Content);
+                  props.onNodeCreation(edgeLabel, nodeTitle, nodeText, nodeImage);
                   setEdgeLabel('');
                   setNodeTitle('');
                   setNodeText('');
                   setNodeImage('');
-                  setAccordion1Heading('');
-                  setAccordion1Content('');
-                  setAccordion2Heading('');
-                  setAccordion2Content('');
-                  setAccordion3Heading('');
-                  setAccordion3Content('');
                   onOpenChange(false);
                 }}>
                   Save changes

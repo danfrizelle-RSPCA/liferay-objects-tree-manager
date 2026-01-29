@@ -7,6 +7,7 @@ import GraphNavigator from './GraphNavigator';
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';
 import EdgeService from './services/EdgeService';
+import AccordionService from './services/AccordionService'
 
 import { ReactFlowProvider } from '@xyflow/react';
 
@@ -55,6 +56,7 @@ class GraphEditorWebComponent extends HTMLElement {
                 this._rootInstance = createRoot(reactRoot);
             }
 
+            // <node> Read configuration from custom element attributes
             const nodeObjectName = this.querySelector("node").getAttribute('object-name'); 
             const nodeObjectNamePlural = this.querySelector("node").getAttribute('object-name-plural');
             const nodeTitle = this.querySelector("node").getAttribute('label');
@@ -64,12 +66,14 @@ class GraphEditorWebComponent extends HTMLElement {
             const xPosition = this.querySelector("node").getAttribute('x');
             const yPosition = this.querySelector("node").getAttribute('y');
 
+            // <edge> Read configuration from custom element attributes
             const edgeObjectName = this.querySelector("edge").getAttribute('object-name');
             const edgeObjectNamePlural = this.querySelector("edge").getAttribute('object-name-plural');
             const sourceRelationName = this.querySelector("edge").getAttribute('source-relationship');
             const targetRelationName = this.querySelector("edge").getAttribute('target-relationship');
             const edgeLabel = this.querySelector("edge").getAttribute('label');
 
+            // <tree> Read configuration from custom element attributes
             const treeObjectName = this.querySelector("tree").getAttribute('object-name');
             const treeObjectNamePlural = this.querySelector("tree").getAttribute('object-name-plural');
             const treeNodesRelationshipName = this.querySelector("tree").getAttribute('node-belongs-relationship');
@@ -99,8 +103,9 @@ class GraphEditorWebComponent extends HTMLElement {
                         nodeDptBaseUrl={nodeDptBaseUrl}
                         treeId={null}
                         treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-                        nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition, 'accordion1Heading', 'accordion1Content', 'accordion2Heading', 'accordion2Content', 'accordion3Heading', 'accordion3Content')}
+                        nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
                         edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
+                        accordionService={new AccordionService(portalBaseUrl, 'accordions', nodeObjectNamePlural, 'accordions', 'r_accordion_c_nodeId', 'heading', 'content')}
                     />
                 </ReactFlowProvider>
             );
@@ -143,6 +148,7 @@ class GraphNavigatorWebComponent extends HTMLElement {
                 this._rootInstance = createRoot(reactRoot);
             }
 
+            // <node> Read configuration from custom element attributes
             const nodeObjectName = this.querySelector("node").getAttribute('object-name'); 
             const nodeObjectNamePlural = this.querySelector("node").getAttribute('object-name-plural');
             const nodeTitle = this.querySelector("node").getAttribute('label');
@@ -152,12 +158,14 @@ class GraphNavigatorWebComponent extends HTMLElement {
             const xPosition = this.querySelector("node").getAttribute('x');
             const yPosition = this.querySelector("node").getAttribute('y');
 
+            // <edge> Read configuration from custom element attributes
             const edgeObjectName = this.querySelector("edge").getAttribute('object-name');
             const edgeObjectNamePlural = this.querySelector("edge").getAttribute('object-name-plural');
             const sourceRelationName = this.querySelector("edge").getAttribute('source-relationship');
             const targetRelationName = this.querySelector("edge").getAttribute('target-relationship');
             const edgeLabel = this.querySelector("edge").getAttribute('label');
 
+            // <tree> Read configuration from custom element attributes
             const treeObjectName = this.querySelector("tree").getAttribute('object-name');
             const treeObjectNamePlural = this.querySelector("tree").getAttribute('object-name-plural');
             const treeNodesRelationshipName = this.querySelector("tree").getAttribute('node-belongs-relationship');
@@ -183,7 +191,8 @@ class GraphNavigatorWebComponent extends HTMLElement {
                     nodeDptBaseUrl={nodeDptBaseUrl}
                     treeERC={treeERC}
                     treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-                    nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition, 'accordion1Heading', 'accordion1Content', 'accordion2Heading', 'accordion2Content', 'accordion3Heading', 'accordion3Content')}
+                    nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
+                    accordionService={new AccordionService(portalBaseUrl, 'accordions', nodeObjectNamePlural, 'accordions', 'r_accordion_c_nodeId', 'heading', 'content')}
                     edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
                 />
             );

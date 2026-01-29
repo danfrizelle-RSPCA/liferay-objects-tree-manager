@@ -304,17 +304,13 @@ function GraphEditor(props) {
         nodeTitle={currentNode ? currentNode.data.nodeTitle : ""}
         nodeText={currentNode ? currentNode.data.nodeText : ""}
         nodeImage={currentNode ? currentNode.data.nodeImage : ""}
-        accordion1Heading={currentNode ? currentNode.data.accordion1Heading : ""}
-        accordion1Content={currentNode ? currentNode.data.accordion1Content : ""}
-        accordion2Heading={currentNode ? currentNode.data.accordion2Heading : ""}
-        accordion2Content={currentNode ? currentNode.data.accordion2Content : ""}
-        accordion3Heading={currentNode ? currentNode.data.accordion3Heading : ""}
-        accordion3Content={currentNode ? currentNode.data.accordion3Content : ""}
         outgoingEdgeCount={currentNode ? edges.filter(edge => edge.source === currentNode.id).length : 0}
         onClose={handleNodeUpdateModalClose}
         onNodeSetAsStart={handleNodeSetAsStart}
         onNodeDeletion={handleNodeDelete}
         onNodeUpdate={handleNodeUpdate}
+        accordionService={props.accordionService}
+        baseURL={props.treeService?.baseURL}
       />
     </>
   );

@@ -16,6 +16,7 @@ function GraphNavigator(props) {
   const { startNodeId, nodes, edges, loadGraphData } = useBrowseGraphData(
     props.treeService,
     props.nodeService,
+    props.accordionService,
     props.edgeService
   );
 
@@ -69,6 +70,7 @@ function GraphNavigator(props) {
             <DecisionScreen
               key={node.id}
               node={node}
+              baseURL={props.treeService.baseURL}
               edges={edges.filter((edge) => edge.source == currentNodeId)}
               onSelect={handleSelectNode}
               onBack={history.length > 0 ? handleBack : null} // show back only if history exists

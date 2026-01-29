@@ -64,35 +64,38 @@ function NodeUpdateModal(props) {
   const [nodeText, setNodeText] = useState("");
   const [nodeImage, setNodeImage] = useState(null);
   const [nodeRoot, setNodeRoot] = useState(false);
-  const [accordion1Heading, setAccordion1Heading] = useState("");
-  const [accordion1Content, setAccordion1Content] = useState("");
-  const [accordion2Heading, setAccordion2Heading] = useState("");
-  const [accordion2Content, setAccordion2Content] = useState("");
-  const [accordion3Heading, setAccordion3Heading] = useState("");
-  const [accordion3Content, setAccordion3Content] = useState("");
+  const [accordions, setAccordions] = useState([]);
+  const [accordionLoading, setAccordionLoading] = useState(false);
+  const [accordionSaving, setAccordionSaving] = useState(false);
+  const [deletedAccordionIds, setDeletedAccordionIds] = useState([]);
 
   useEffect(() => {
     setNodeTitle(props.nodeTitle);
     setNodeText(props.nodeText);
     setNodeImage(props.nodeImage);
     setNodeRoot(props.nodeRoot);
-    setAccordion1Heading(props.accordion1Heading || "");
-    setAccordion1Content(props.accordion1Content || "");
-    setAccordion2Heading(props.accordion2Heading || "");
-    setAccordion2Content(props.accordion2Content || "");
-    setAccordion3Heading(props.accordion3Heading || "");
-    setAccordion3Content(props.accordion3Content || "");
+    // load accordions for current node if accordionService provided
+    if (props.accordionService && props.currentNode && props.currentNode.id) {
+      setAccordionLoading(true);
+      props.accordionService.getAccordions(props.currentNode.id)
+        .then(items => {
+          // normalize to { id, title, content }
+          setAccordions(items.map(it => ({ id: it.id, title: it.accordionHeading || it.title || '', content: it.accordionContent || it.content || '' })));
+          setDeletedAccordionIds([]);
+          setAccordionLoading(false);
+        }).catch(err => {
+          console.error('Failed to load accordions in modal', err);
+          setAccordions([]);
+          setAccordionLoading(false);
+        });
+    } else {
+      setAccordions([]);
+    }
   }, [
     props.nodeTitle,
     props.nodeText,
     props.nodeImage,
     props.nodeRoot,
-    props.accordion1Heading,
-    props.accordion1Content,
-    props.accordion2Heading,
-    props.accordion2Content,
-    props.accordion3Heading,
-    props.accordion3Content,
     props.currentNode,
     props.nodeDptBaseUrl,
   ]);
@@ -136,101 +139,51 @@ function NodeUpdateModal(props) {
           />
         </ClayForm.Group>
 
-        {props.outgoingEdgeCount === 0 && (
-        <ClayPanel.Group>
-          <ClayPanel
-            displayTitle="Accordion 1"
-            displayType="secondary"
-            collapsible
-            expanded={false}
-          >
-            <ClayPanel.Body>
-              <ClayForm.Group>
-                <label htmlFor="accordion1Heading">Heading</label>
-                <ClayInput
-                  id="accordion1Heading"
-                  placeholder="Heading for first accordion"
-                  value={accordion1Heading}
-                  onChange={(e) => setAccordion1Heading(e.target.value)}
-                  type="text"
-                />
-              </ClayForm.Group>
-              <ClayForm.Group>
-                <label>Content</label>
-                <CKEditor
-                  editor={ClassicEditor}
-                  config={editorConfig}
-                  data={accordion1Content || ""}
-                  onChange={(event, editor) => {
-                    setAccordion1Content(editor.getData());
-                  }}
-                />
-              </ClayForm.Group>
-            </ClayPanel.Body>
-          </ClayPanel>
+        <ClayPanel className="mt-3">
+          <ClayPanel.Body>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <h4 className="m-0">Accordions</h4>
+              <ClayButton displayType="secondary" onClick={() => setAccordions(prev => [...prev, { id: null, title: '', content: '' }])}>Add accordion</ClayButton>
+            </div>
 
-          <ClayPanel
-            displayTitle="Accordion 2"
-            displayType="secondary"
-            collapsible
-            expanded={false}
-          >
-            <ClayPanel.Body>
-              <ClayForm.Group>
-                <label htmlFor="accordion2Heading">Heading</label>
-                <ClayInput
-                  id="accordion2Heading"
-                  placeholder="Heading for second accordion"
-                  value={accordion2Heading}
-                  onChange={(e) => setAccordion2Heading(e.target.value)}
-                  type="text"
-                />
-              </ClayForm.Group>
-              <ClayForm.Group>
-                <label>Content</label>
-                <CKEditor
-                  editor={ClassicEditor}
-                  config={editorConfig}
-                  data={accordion2Content || ""}
-                  onChange={(event, editor) => {
-                    setAccordion2Content(editor.getData());
-                  }}
-                />
-              </ClayForm.Group>
-            </ClayPanel.Body>
-          </ClayPanel>
+            {accordionLoading && <div>Loading accordions…</div>}
 
-          <ClayPanel
-            displayTitle="Accordion 3"
-            displayType="secondary"
-            collapsible
-          >
-            <ClayPanel.Body>
-              <ClayForm.Group>
-                <label htmlFor="accordion3Heading">Heading</label>
-                <ClayInput
-                  id="accordion3Heading"
-                  placeholder="Heading for third accordion"
-                  value={accordion3Heading}
-                  onChange={(e) => setAccordion3Heading(e.target.value)}
-                  type="text"
-                />
-              </ClayForm.Group>
-              <ClayForm.Group>
-                <label>Content</label>
-                <CKEditor
-                  editor={ClassicEditor}
-                  config={editorConfig}
-                  data={accordion3Content || ""}
-                  onChange={(event, editor) => {
-                    setAccordion3Content(editor.getData());
-                  }}
-                />
-              </ClayForm.Group>
-            </ClayPanel.Body>
-          </ClayPanel>
-        </ClayPanel.Group>
-        )}
+            {!accordionLoading && accordions.length === 0 && <div className="text-muted">No accordions</div>}
+
+            {accordions.filter(a => !deletedAccordionIds.includes(a.id)).map((acc, idx) => (
+              <div key={idx} className="mb-3 p-2 bg-white" style={{ border: '1px solid #eee' }}>
+                <ClayForm.Group>
+                  <label>Heading</label>
+                  <ClayInput value={acc.title} onChange={(e) => setAccordions(prev => prev.map((a,i)=> i===idx ? { ...a, title: e.target.value } : a))} />
+                </ClayForm.Group>
+
+                <ClayForm.Group>
+                  <label>Content</label>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={acc.content || ''}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setAccordions(prev => prev.map((a,i)=> i===idx ? { ...a, content: data } : a));
+                    }}
+                  />
+                </ClayForm.Group>
+
+                <div className="d-flex justify-content-end">
+                  <ClayButton displayType="link" onClick={() => {
+                    // mark for deletion locally; actual delete happens on main Save
+                    if (acc.id) {
+                      setDeletedAccordionIds(prev => [...prev, acc.id]);
+                    } else {
+                      // unsaved item: remove immediately
+                      setAccordions(prev => prev.filter((_,i) => i !== idx));
+                    }
+                  }}>Remove</ClayButton>
+                </div>
+              </div>
+            ))}
+          </ClayPanel.Body>
+        </ClayPanel>
       </ClayModal.Body>
     );
   };
@@ -282,12 +235,55 @@ function NodeUpdateModal(props) {
             </ClayButton>
 
             <ClayButton
-              onClick={() => {
-                props.onNodeUpdate(nodeTitle, nodeText, nodeImage, accordion1Heading, accordion1Content, accordion2Heading, accordion2Content, accordion3Heading, accordion3Content);
+              disabled={accordionSaving}
+              onClick={async () => {
+                // First persist accordions (create or update) if service is available
+                if (props.accordionService) {
+                  setAccordionSaving(true);
+                  try {
+                    const toDelete = deletedAccordionIds.slice();
+                    const toCreate = accordions.filter(a => !a.id);
+                    const toUpdate = accordions.filter(a => a.id && !deletedAccordionIds.includes(a.id));
+
+                    // create new accordions
+                    const created = await Promise.all(toCreate.map(acc => 
+                      props.accordionService.createAccordion(props.currentNode.id, acc.title, acc.content)
+                        .then(newItem => ({ ...acc, id: newItem.id }))
+                        .catch(err => { console.error('Create failed', err); return null; })
+                    ));
+
+                    // update existing accordions
+                    await Promise.all(toUpdate.map(acc => 
+                      props.accordionService.updateAccordion(acc.id, acc.title, acc.content).catch(err => { console.error('Update failed', err); })
+                    ));
+
+                    // delete marked accordions
+                    await Promise.all(toDelete.map(id => 
+                      props.accordionService.deleteAccordion(id).catch(err => { console.error('Delete failed', err); })
+                    ));
+
+                    // reload authoritative accordions from server to ensure relationship fields etc are present
+                    try {
+                      const refreshed = await props.accordionService.getAccordions(props.currentNode.id);
+                      setAccordions(refreshed.map(it => ({ id: it.id, title: it.accordionHeading || it.title || '', content: it.accordionContent || it.content || '' })));
+                      setDeletedAccordionIds([]);
+                    } catch (refreshErr) {
+                      console.warn('Failed to refresh accordions after save', refreshErr);
+                    }
+                  } catch (err) {
+                    console.error('Failed to save accordions', err);
+                    // continue to attempt node save even if accordions fail
+                  } finally {
+                    setAccordionSaving(false);
+                  }
+                }
+
+                // Persist node changes
+                props.onNodeUpdate(nodeTitle, nodeText, nodeImage);
                 onOpenChange(false);
               }}
             >
-              Save changes
+              {accordionSaving ? 'Saving…' : 'Save changes'}
             </ClayButton>
           </ClayButton.Group>
         }
