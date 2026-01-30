@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import ClayButton from "@clayui/button";
 
-import AccordionGroup from "../../components/AccordionGroup";
+import AccordionGroup from "../../shared/components/AccordionGroup";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
 export default function DecisionScreen({

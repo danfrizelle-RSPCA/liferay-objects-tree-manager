@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ApiService from '../services/ApiService';
+import ApiService from '../../services/ApiService';
 
 /* Hook: useNodeAccordions
 Purpose: fetch accordion data for a specific node.
@@ -22,12 +22,12 @@ export const useNodeAccordions = (baseURL, nodeId) => {
 
     const url = `${baseURL}nodes/${nodeId}/accordion`;
     console.log(`Fetching accordions from URL: ${url}`);
-    
+
     ApiService.makeCall(url, 'GET')
       .then(data => {
         // The endpoint should return accordion data; check if it's an array or object
         let accordionList = [];
-        
+
         if (Array.isArray(data)) {
           accordionList = data;
         } else if (data && data.items && Array.isArray(data.items)) {

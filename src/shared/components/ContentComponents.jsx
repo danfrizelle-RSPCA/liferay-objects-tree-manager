@@ -100,8 +100,9 @@ export function ContentBlockAccordion({
                     </div>
                   </button>
                   <div
-                    className={`contents aj__contents ${openIndex === index ? "show" : ""
-                      }`}
+                    className={`contents aj__contents ${
+                      openIndex === index ? "show" : ""
+                    }`}
                     role="region"
                   >
                     <div type="rich-text">{accordion.content}</div>

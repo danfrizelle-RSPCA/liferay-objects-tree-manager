@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayForm, {ClayInput} from '@clayui/form';
-import AccordionEditor from '../../components/AccordionEditor';
-import NodeFieldsForm from '../../components/NodeFieldsForm';
-import { useCkEditorConfig } from '../../hooks/useCkEditorConfig';
+import AccordionEditor from '../../shared/components/AccordionEditor';
+import NodeFieldsForm from '../../shared/components/NodeFieldsForm';
+import { useCkEditorConfig } from '../../shared/hooks/useCkEditorConfig';
 
 function NodeCreationModal(props) {
 

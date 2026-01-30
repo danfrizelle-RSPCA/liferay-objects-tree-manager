@@ -25,7 +25,7 @@ import { useEdgeCreation } from "./hooks/useEdgeCreation";
 import { useEdgeUpdate } from "./hooks/useEdgeUpdate";
 import { useTreeData } from "./hooks/useTreeData";
 import { useGraphData } from "./hooks/useGraphData";
-import { getLayoutedElements } from "../utils/layoutUtils";
+import { getLayoutedElements } from "./utils/layoutUtils";
 import LoadingModal from "../shared/modals/LoadingModal";
 import EdgeCreationModal from "./modals/EdgeCreationModal";
 import EdgeEditionModal from "./modals/EdgeEditionModal";

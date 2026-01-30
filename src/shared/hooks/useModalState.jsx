@@ -27,7 +27,7 @@ export const useModalState = (nodeService, edgeService, nodes, setNodes, edges, 
       const handleCloseEdgeEditionModal = () => {
         setEdgeEditionModalOpen(false);
       };
-    
+
       const handleEdgeLabelChange = (newLabel) => {
         if (currentEdge) {
           const updatedEdges = edges.map((edge) => {
@@ -36,20 +36,20 @@ export const useModalState = (nodeService, edgeService, nodes, setNodes, edges, 
             }
             return edge;
           });
-    
+
           edgeService.updateEdgeLabel(currentEdge.id, newLabel);
           setEdges(updatedEdges);
         }
-    
+
       };
-    
+
       const handleNodeCreationModalClose = () => {
         setNodeCreationModalOpen(false);
       }
 
       const handleNodeCreation = (edgeLabel, nodeTitle, nodeText, nodeImage) => {
         nodeService.createNode(nodeTitle, nodeText, nodeImage).then(newNodeData => {
-    
+
           const newNode = {
             id: '' + newNodeData.id,
             type: 'custom',
@@ -62,11 +62,11 @@ export const useModalState = (nodeService, edgeService, nodes, setNodes, edges, 
               id: newNodeData.id
             }
           }
-    
+
           setNodes((prevNodes) => [...prevNodes, newNode]);
-    
+
           edgeService.createEdge(currentNode.id, newNode.id, edgeLabel).then(newEdgeData => {
-    
+
             const newEdge = {
               id: '' + newEdgeData.id,
               source: '' + newEdgeData.sourceNodeId,
@@ -76,13 +76,12 @@ export const useModalState = (nodeService, edgeService, nodes, setNodes, edges, 
                 text: newEdgeData.edgeLabel
               }
             }
-    
+
             setEdges((prevEdges) => [...prevEdges, newEdge]);
-    
+
           });
         });
       }
-    
+
     return {onEdgeClick, onConnectEnd, handleCloseEdgeEditionModal, handleEdgeLabelChange, handleNodeCreationModalClose, handleNodeCreation, edgeEditionModalOpen, nodeCreationModalOpen, labelInput, currentEdge};
 };
-
