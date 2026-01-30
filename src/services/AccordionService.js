@@ -22,7 +22,23 @@ class AccordionService {
     // getAccordions: fetch accordions for a given node id and map fields into a normalized shape used by the UI (including position fields).
     getAccordions(nodeId) {
         // Preferred node-specific endpoint: /nodes/{nodeId}/accordion
-        const url = this.baseURL + this.nodeObjectName + "/" + nodeId + "/accordion";
+        // Request only the needed fields when the endpoint supports it (common for Liferay object APIs).
+        const fields = [
+            'id',
+            this.accordionHeading,
+            this.accordionContent
+        ].filter(Boolean).join(',');
+
+        const query = `?pageSize=200&fields=${encodeURIComponent(fields)}`;
+        const url = this.baseURL + this.nodeObjectName + "/" + nodeId + "/accordion" + query;
+
+        const timeLabel = `AccordionService.getAccordions(${nodeId})`;
+        try {
+            console.time(timeLabel);
+        } catch (e) {
+            // ignore in environments without console.time
+        }
+
         console.log('AccordionService.getAccordions URL:', url);
         return ApiService.makeCall(url, "GET").then(data => {
             // data might be array or object with items
@@ -31,11 +47,23 @@ class AccordionService {
             else if (data && data.items) items = data.items;
             else if (data) items = [data];
 
+            try {
+                console.log(`AccordionService.getAccordions raw item count for node ${nodeId}:`, items.length);
+            } catch (e) {
+                // ignore
+            }
+
             return items.map(item => ({
                 id: item.id,
                 accordionHeading: item[this.accordionHeading] || item.heading || item.title,
                 accordionContent: item[this.accordionContent] || item.content || item.body
             }));
+        }).finally(() => {
+            try {
+                console.timeEnd(timeLabel);
+            } catch (e) {
+                // ignore
+            }
         });
 
     }

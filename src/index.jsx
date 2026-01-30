@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
-import GraphEditor from './GraphEditor';
-import GraphNavigator from './GraphNavigator';
+import GraphEditor from './editor/GraphEditor';
+import GraphNavigator from './navigator/GraphNavigator';
 
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';
@@ -67,7 +66,6 @@ class GraphEditorWebComponent extends HTMLElement {
             const yPosition = this.querySelector("node").getAttribute('y');
 
             // <edge> Read configuration from custom element attributes
-            const edgeObjectName = this.querySelector("edge").getAttribute('object-name');
             const edgeObjectNamePlural = this.querySelector("edge").getAttribute('object-name-plural');
             const sourceRelationName = this.querySelector("edge").getAttribute('source-relationship');
             const targetRelationName = this.querySelector("edge").getAttribute('target-relationship');
@@ -159,7 +157,6 @@ class GraphNavigatorWebComponent extends HTMLElement {
             const yPosition = this.querySelector("node").getAttribute('y');
 
             // <edge> Read configuration from custom element attributes
-            const edgeObjectName = this.querySelector("edge").getAttribute('object-name');
             const edgeObjectNamePlural = this.querySelector("edge").getAttribute('object-name-plural');
             const sourceRelationName = this.querySelector("edge").getAttribute('source-relationship');
             const targetRelationName = this.querySelector("edge").getAttribute('target-relationship');

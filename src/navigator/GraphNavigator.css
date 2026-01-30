@@ -1,0 +1,63 @@
+/*
+.aj__report-incident img {
+	object-fit: cover;
+}
+
+.aj__radio-check-icon {
+	top: 0;
+	left: 0;
+	color: var(--sheep-white, #FFFAF5);
+	transform: translate(33%, 30%);
+	font-size: 13px;
+    pointer-events: none;
+}
+
+input.aj__radio {
+	position: relative;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border: 2px solid var(---rspca-blue, #2622F7);
+	border-radius: 50%;
+	outline: none;
+}
+
+input.aj__radio::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: var(---rspca-blue, #2622F7);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+input.aj__radio:checked::before {
+	opacity: 1;
+}
+
+.aj__row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.aj__img-cover {
+	object-fit: cover;
+}
+
+.aj__w-20px {
+	width: 20px;
+}
+
+.aj__h-20px {
+	height: 20px;
+}
+
+.aj__pointer {
+    cursor: pointer;
+} */
