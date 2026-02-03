@@ -78,6 +78,13 @@ class GraphEditorWebComponent extends HTMLElement {
             const treeEdgesRelationshipName = this.querySelector("tree").getAttribute('edge-belongs-relationship');
             const treeLabel = this.querySelector("tree").getAttribute('label');
 
+            // <accordion> Read configuration from custom element attributes
+            const accordionObjectName = this.querySelector("accordion").getAttribute('object-name');
+            const accordionObjectNamePlural = this.querySelector("accordion").getAttribute('object-name-plural');
+            const nodeAccordionsId = this.querySelector("accordion").getAttribute('node-accordions-id');
+            const accordionHeading = this.querySelector("accordion").getAttribute('heading');
+            const accordionContent = this.querySelector("accordion").getAttribute('content');
+
             const edgeDptBaseUrl = this.getAttribute("edge-dpt-base-url");
             const nodeDptBaseUrl = this.getAttribute("node-dpt-base-url");
 
@@ -103,7 +110,7 @@ class GraphEditorWebComponent extends HTMLElement {
                         treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
                         nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
                         edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
-                        accordionService={new AccordionService(portalBaseUrl, 'accordions', nodeObjectNamePlural, 'accordions', 'r_accordion_c_nodeId', 'heading', 'content')}
+                        accordionService={new AccordionService(portalBaseUrl, nodeObjectNamePlural, accordionObjectName, accordionObjectNamePlural, nodeAccordionsId, accordionHeading, accordionContent)}
                     />
                 </ReactFlowProvider>
             );
@@ -169,6 +176,13 @@ class GraphNavigatorWebComponent extends HTMLElement {
             const treeEdgesRelationshipName = this.querySelector("tree").getAttribute('edge-belongs-relationship');
             const treeLabel = this.querySelector("tree").getAttribute('label');
 
+            // <accordion> Read configuration from custom element attributes
+            const accordionObjectName = this.querySelector("accordion").getAttribute('object-name');
+            const accordionObjectNamePlural = this.querySelector("accordion").getAttribute('object-name-plural');
+            const nodeAccordionsId = this.querySelector("accordion").getAttribute('node-accordions-id');
+            const accordionHeading = this.querySelector("accordion").getAttribute('heading');
+            const accordionContent = this.querySelector("accordion").getAttribute('content');
+
             const edgeDptBaseUrl = this.getAttribute("edge-dpt-base-url");
             const nodeDptBaseUrl = this.getAttribute("node-dpt-base-url");
 
@@ -189,8 +203,8 @@ class GraphNavigatorWebComponent extends HTMLElement {
                     treeERC={treeERC}
                     treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
                     nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
-                    accordionService={new AccordionService(portalBaseUrl, 'accordions', nodeObjectNamePlural, 'accordions', 'r_accordion_c_nodeId', 'heading', 'content')}
                     edgeService={new EdgeService(portalBaseUrl, edgeObjectNamePlural, treeObjectNamePlural, treeEdgesRelationshipName, treeEdgesRelationshipId, sourceRelationId, targetRelationId, edgeLabel)}
+                    accordionService={new AccordionService(portalBaseUrl, nodeObjectNamePlural, accordionObjectName, accordionObjectNamePlural, nodeAccordionsId, accordionHeading, accordionContent)}
                 />
             );
         }

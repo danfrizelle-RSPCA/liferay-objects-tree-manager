@@ -4,17 +4,16 @@ import ApiService from './ApiService';
 
 Constructor takes a set of field/object names so the same class can be reused for different Liferay object schemas.
 Example usage (from `src/index.jsx`):
-new AccordionService(portalBaseUrl, accordionObjectNamePlural, nodeObjectNamePlural, nodeAccordionsRelationshipName, nodeAccordionsRelationshipId, accordionHeading, accordionContent) */
+new AccordionService(portalBaseUrl, accordionObjectNamePlural, nodeObjectNamePlural, nodeAccordionsId, accordionHeading, accordionContent) */
 class AccordionService {
 
     //localhost:8080/o/c/nodes/42600/accordions/?pageSize=500&fields=id,heading,content
-    constructor(baseURL, accordionObjectName, nodeObjectName, nodeAccordionsRelationshipName, nodeAccordionsRelationshipId, accordionHeading, accordionContent) {
+    constructor(baseURL, nodeObjectNamePlural, accordionObjectName, accordionObjectNamePlural, nodeAccordionsId, accordionHeading, accordionContent) {
         this.baseURL = baseURL;
+        this.nodeObjectNamePlural = nodeObjectNamePlural;
         this.accordionObjectName = accordionObjectName;
-        this.nodeObjectName = nodeObjectName;
-        this.nodeAccordionsRelationshipName = nodeAccordionsRelationshipName;
-        this.nodeAccordionsRelationshipId = nodeAccordionsRelationshipId;
-        this.accordionRoot = 'root';
+        this.accordionObjectNamePlural = accordionObjectNamePlural;
+        this.nodeAccordionsId = nodeAccordionsId;
         this.accordionHeading = accordionHeading;
         this.accordionContent = accordionContent;
     }
@@ -30,7 +29,7 @@ class AccordionService {
         ].filter(Boolean).join(',');
 
         const query = `?pageSize=200&fields=${encodeURIComponent(fields)}`;
-        const url = this.baseURL + this.nodeObjectName + "/" + nodeId + "/accordion" + query;
+        const url = this.baseURL + this.nodeObjectNamePlural + "/" + nodeId + "/" + this.accordionObjectName + query;
 
         const timeLabel = `AccordionService.getAccordions(${nodeId})`;
         try {
@@ -70,9 +69,9 @@ class AccordionService {
 
     createAccordion(nodeId, accordionHeading, accordionContent) {
         // POST to root /accordions endpoint with relationship field; Liferay API does not support POST to /nodes/{nodeId}/accordion
-        const url = this.baseURL + this.accordionObjectName;
+        const url = this.baseURL + this.accordionObjectNamePlural;
         const body = {
-            [this.nodeAccordionsRelationshipId]: nodeId,
+            [this.nodeAccordionsId]: nodeId,
             [this.accordionHeading]: accordionHeading,
             [this.accordionContent]: accordionContent
         };
@@ -89,7 +88,7 @@ class AccordionService {
 
     updateAccordion(accordionId, accordionHeading, accordionContent) {
         // Use PUT on the root /accordions/{id} endpoint
-        const url = this.baseURL + this.accordionObjectName + "/" + accordionId;
+        const url = this.baseURL + this.accordionObjectNamePlural + "/" + accordionId;
         const body = {
             [this.accordionHeading]: accordionHeading,
             [this.accordionContent]: accordionContent
@@ -101,7 +100,7 @@ class AccordionService {
 
     deleteAccordion(accordionId) {
         // Use DELETE on the root /accordions/{id} endpoint
-        const url = this.baseURL + this.accordionObjectName + "/" + accordionId;
+        const url = this.baseURL + this.accordionObjectNamePlural + "/" + accordionId;
         console.log('AccordionService.deleteAccordion URL:', url);
         return ApiService.makeCall(url, "DELETE");
 
