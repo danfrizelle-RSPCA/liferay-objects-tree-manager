@@ -37,7 +37,7 @@ import TreeCreationModal from "./modals/TreeCreationModal";
 
 /* GraphEditor: main editing UI
 - composes many hooks located under `src/editor/hooks/` to handle tree selection, node/edge creation and updates, and tree lifecycle
-- delegates API operations to service instances passed in via props (see `src/index.jsx` where services are constructed)
+- delegates API operations to service instances passed in via props (see `src/graph-editor-index.jsx` where services are constructed)
 - uses `@xyflow/react` for the canvas; node rendering is provided by `editor/flow/CustomNode.jsx` */
 
 const nodeTypes = { custom: CustomNode };

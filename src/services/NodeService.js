@@ -3,7 +3,7 @@ import ApiService from './ApiService';
 /* NodeService: encapsulates CRUD operations for node objects.
 
 Constructor takes a set of field/object names so the same class can be reused for different Liferay object schemas.
-Example usage (from `src/index.jsx`):
+Example usage (from `src/graph-editor-index.jsx` / `src/graph-navigator-index.jsx`):
 new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage,nodeRoot, xPosition, yPosition) */
 class NodeService {
 

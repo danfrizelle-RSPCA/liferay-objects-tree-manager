@@ -35,10 +35,10 @@ yarn build
 
 ### Entry point
 
-`src/index.jsx` registers two custom elements:
+Two separate entrypoints register the custom elements:
 
-- `GraphEditorWebComponent` → renders `src/editor/GraphEditor.jsx`
-- `GraphNavigatorWebComponent` → renders `src/navigator/GraphNavigator.jsx`
+- `src/graph-editor-index.jsx` → registers `<graph-editor>` and renders `src/editor/GraphEditor.jsx`
+- `src/graph-navigator-index.jsx` → registers `<graph-navigator>` and renders `src/navigator/GraphNavigator.jsx`
 
 Both web components:
 
@@ -147,7 +147,7 @@ Important attributes:
 - `tree-erc` (navigator only): external reference code to resolve the tree id
 - `edge-dpt-base-url` / `node-dpt-base-url`: used to build pop-up (DPT) URLs in modals
 
-How relationship ids are derived (in `src/index.jsx`):
+How relationship ids are derived (in `src/graph-editor-index.jsx` / `src/graph-navigator-index.jsx`):
 
 - edge source/target ids:
   - `r_{source-relationship}_c_{nodeObjectName}Id`
@@ -266,7 +266,8 @@ Concrete examples with those values:
 
 ## Folder map (src/)
 
-- `src/index.jsx`: defines the web components and wires configuration → services → React
+- `src/graph-editor-index.jsx`: defines `<graph-editor>` web component and wires configuration → services → React
+- `src/graph-navigator-index.jsx`: defines `<graph-navigator>` web component and wires configuration → services → React
 - `src/editor/`: editor-only UI (React Flow) + modals + hooks + custom node/edge renderers
   - `src/editor/GraphEditor.jsx`: editor canvas UI (React Flow) + modal orchestration
   - `src/editor/hooks/`: composable editor behaviors (tree/node/edge CRUD)

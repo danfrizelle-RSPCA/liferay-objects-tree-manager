@@ -1,1 +1,1 @@
-import 'grapheditorCX';
+import 'graphEditor';
