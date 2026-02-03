@@ -85,9 +85,6 @@ class GraphEditorWebComponent extends HTMLElement {
             const accordionHeading = this.querySelector("accordion").getAttribute('heading');
             const accordionContent = this.querySelector("accordion").getAttribute('content');
 
-            const edgeDptBaseUrl = this.getAttribute("edge-dpt-base-url");
-            const nodeDptBaseUrl = this.getAttribute("node-dpt-base-url");
-
             const sourceRelationId = 'r_' + sourceRelationName + '_c_' + nodeObjectName + 'Id';
             const targetRelationId = 'r_' + targetRelationName + '_c_' + nodeObjectName + 'Id';
 
@@ -104,8 +101,6 @@ class GraphEditorWebComponent extends HTMLElement {
             this._rootInstance.render(
                 <ReactFlowProvider>  
                     <GraphEditor
-                        edgeDptBaseUrl={edgeDptBaseUrl}
-                        nodeDptBaseUrl={nodeDptBaseUrl}
                         treeId={null}
                         treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
                         nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}
@@ -183,9 +178,6 @@ class GraphNavigatorWebComponent extends HTMLElement {
             const accordionHeading = this.querySelector("accordion").getAttribute('heading');
             const accordionContent = this.querySelector("accordion").getAttribute('content');
 
-            const edgeDptBaseUrl = this.getAttribute("edge-dpt-base-url");
-            const nodeDptBaseUrl = this.getAttribute("node-dpt-base-url");
-
             const sourceRelationId = 'r_' + sourceRelationName + '_c_' + nodeObjectName + 'Id';
             const targetRelationId = 'r_' + targetRelationName + '_c_' + nodeObjectName + 'Id';
 
@@ -198,8 +190,6 @@ class GraphNavigatorWebComponent extends HTMLElement {
 
             this._rootInstance.render(
                 <GraphNavigator
-                    edgeDptBaseUrl={edgeDptBaseUrl}
-                    nodeDptBaseUrl={nodeDptBaseUrl}
                     treeERC={treeERC}
                     treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
                     nodeService={new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition)}

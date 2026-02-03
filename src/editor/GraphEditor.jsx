@@ -282,7 +282,6 @@ function GraphEditor(props) {
         onEdgeCreation={handleEdgeCreation}
       />
       <EdgeEditionModal
-        edgeDptBaseUrl={props.edgeDptBaseUrl}
         open={edgeEditionModalOpen && !loading}
         label={currentEdge ? currentEdge.label : ""}
         currentEdge={currentEdge}
@@ -303,7 +302,6 @@ function GraphEditor(props) {
         accordionService={props.accordionService}
       />
       <NodeUpdateModal
-        nodeDptBaseUrl={props.nodeDptBaseUrl}
         open={nodeUpdateModalOpen && !loading} //open={nodeUpdateModalOpen && !loading || import.meta.env.DEV}
         currentNode={currentNode}
         loadGraphData={loadGraphData}

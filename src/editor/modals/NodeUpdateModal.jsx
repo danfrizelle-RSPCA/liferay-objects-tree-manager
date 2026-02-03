@@ -67,8 +67,7 @@ function NodeUpdateModal(props) {
     props.nodeImage,
     props.nodeRoot,
     props.currentNode,
-    props.accordionService,
-    props.nodeDptBaseUrl,
+    props.accordionService
   ]);
 
   if (!props.open) return null;

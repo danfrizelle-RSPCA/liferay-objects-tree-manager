@@ -1,9 +1,6 @@
-<graph-editor
-    portal-base-url="${themeDisplay.getPortalURL()}/o/c/"
-    edge-dpt-base-url="/web/guest/e/dt_edge-editor/35880/"
-    node-dpt-base-url="/web/guest/e/dt_node-editor/35805/"
->
+<graph-editor portal-base-url="${themeDisplay.getPortalURL()}/o/c/">
 	<tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
-	<node object-name="node" object-name-plural="nodes" label="label" text="description" root="root" x="xCoordinates" y="yCoordinates" />
+	<node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
 	<edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
+	<accordion object-name="accordion" object-name-plural="accordions" label="label" node-accordions-id="r_accordion_c_nodeId" heading="heading" content="content" />
 </graph-editor>
