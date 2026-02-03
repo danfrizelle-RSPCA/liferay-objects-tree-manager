@@ -20,9 +20,7 @@ export default function Accordion({
           <i className={`fa fa-chevron-${isOpen ? 'up' : 'down'}`} />
         </div>
 
-        <div id={`accHeading-${index}`}>
-          {title}
-        </div>
+        <div id={`accHeading-${index}`}>{title}</div>
       </button>
 
       <div
@@ -32,7 +30,11 @@ export default function Accordion({
         className={`contents ${isOpen ? 'show' : ''}`}
         style={{ display: isOpen ? 'block' : 'none' }}
       >
-        <div id={`accContent-${index}`} type="rich-text" dangerouslySetInnerHTML={{ __html: content }} />
+        <div
+          id={`accContent-${index}`}
+          type="rich-text"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
     </li>
   );

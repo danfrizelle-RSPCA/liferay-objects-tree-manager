@@ -8,6 +8,10 @@
 
 :root {
 	--ck-content-font-family: 'Lato';
+    /* Ensure CKEditor floating panels (e.g., Link balloon) render above Clay modals. */
+    --ck-z-default: 100;
+    --ck-z-panel: 20000;
+    --ck-z-modal: 20000;
 }
 
 .main-container {
@@ -30,6 +34,12 @@
 /* Remove this and fix the underlying scroll issue (modal-open added to body) */
 .modal-open {
     overflow:scroll !important;
+}
+
+.ck-body-wrapper,
+.ck.ck-balloon-panel,
+.ck.ck-dropdown__panel {
+    z-index: 99999 !important;
 }
 
 

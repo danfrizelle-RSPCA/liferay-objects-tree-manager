@@ -204,6 +204,29 @@ A node object in `GraphNavigator` state is normalized to:
 
 All endpoints are built from `portal-base-url` (typically `.../o/c/`). Object names, relationship names, and field names come from the component configuration.
 
+### Cloud engineer handoff (examples)
+
+- Base prefix: `{portalBaseUrl}/o/c/` where `portalBaseUrl` is the portal origin (example local dev: `http://localhost:8080`)
+- Example object/relationship names from the sample markup:
+  - `treeObjectNamePlural = trees`
+  - `treeLabel = label`
+  - `treeNodesRelationshipName = nodeBelongs`
+  - `treeEdgesRelationshipName = edgeBelongs`
+  - `nodeObjectNamePlural = nodes`
+  - `edgeObjectNamePlural = edges`
+  - `treeERC = 6442d65a-0e44-fc4a-90b3-69bbc99186e9`
+
+Concrete examples with those values:
+
+- `GET  {base}trees/?fields=id,label`
+- `GET  {base}trees/by-external-reference-code/6442d65a-0e44-fc4a-90b3-69bbc99186e9/?fields=id`
+- `GET  {base}trees/{treeId}/nodeBelongs/?pageSize=500&fields=...`
+- `GET  {base}trees/{treeId}/edgeBelongs/?pageSize=500&fields=...`
+- `POST {base}nodes`
+- `POST {base}edges/`
+- `GET  {base}nodes/{nodeId}/accordion?pageSize=200&fields=id,heading,content`
+- `POST {base}accordions`
+
 ### Trees (`TreeService`)
 
 - `GET {base}trees/?fields=id,{treeLabelField}`
@@ -255,10 +278,10 @@ All endpoints are built from `portal-base-url` (typically `.../o/c/`). Object na
   - `src/navigator/hooks/`: browse graph data loader + scrolling helpers
 - `src/shared/`: shared UI used by both editor + navigator
   - `src/shared/modals/LoadingModal.jsx`: loading spinner modal
-- `src/components/`: shared UI components (e.g., accordion rendering + shared form building blocks)
-- `src/hooks/`: shared hooks (e.g., CKEditor config)
+- `src/shared/components/`: shared UI components (accordion rendering + shared form building blocks)
+- `src/shared/hooks/`: shared hooks (e.g., CKEditor config)
 - `src/services/`: API wrappers
-- `src/utils/layoutUtils.js`: auto-layout helpers
+- `src/editor/utils/layoutUtils.js`: editor-only auto-layout helpers
 
 ---
 
@@ -267,3 +290,4 @@ All endpoints are built from `portal-base-url` (typically `.../o/c/`). Object na
 - `ApiService` relies on `window.Liferay.Util.fetch`. In local dev, ensure your environment provides it (your dev setup likely shims it).
 - Field names differ between fragments (`label/body/image` vs `name/description`). Make sure the markup matches your Liferay object schema.
 - Accordion loads can be heavy if `content` is large; the code requests only `id,heading,content`, but the payload size is still driven by your stored HTML.
+- Non-API URLs: images may load from `node.nodeImage.link.href`, and some shared components embed YouTube (`https://www.youtube.com/embed/...`) or open external links via `window.open()`.

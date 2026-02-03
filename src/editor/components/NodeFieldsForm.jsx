@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ClassicEditor } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css';
 
 import ClayForm, { ClayInput } from '@clayui/form';

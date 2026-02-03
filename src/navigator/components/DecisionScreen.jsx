@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import ClayButton from "@clayui/button";
 
-import AccordionGroup from "../../shared/components/AccordionGroup";
+import AccordionGroup from "./accordion/AccordionGroup";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
 export default function DecisionScreen({
@@ -56,22 +56,18 @@ export default function DecisionScreen({
           {error && <div className="alert alert-danger mt-4">{error}</div>}
 
           {console.log("Edges length:", edges.length)}
-          {edges.length === 0 && (
-            <>
-              {node.nodeText && (
-                <div dangerouslySetInnerHTML={{ __html: node.nodeText }} />
-              )}
-              {accordions && accordions.length > 0 && (
-                <AccordionGroup
-                  accordionData={
-                    accordions.map((acc) => ({
-                      title: acc.accordionHeading || acc.title || "",
-                      content: acc.accordionContent || acc.content || "",
-                    }))
-                  }
-                />
-              )}
-            </>
+          {node.nodeText && (
+            <div dangerouslySetInnerHTML={{ __html: node.nodeText }} />
+          )}
+          {accordions && accordions.length > 0 && (
+            <AccordionGroup
+              accordionData={accordions
+                .map((acc) => ({
+                  title: acc.accordionHeading || acc.title || "",
+                  content: acc.accordionContent || acc.content || "",
+                }))
+                .filter((item) => String(item.title).trim().length > 0)}
+            />
           )}
 
           {edges.length > 0 && (
@@ -141,9 +137,8 @@ export default function DecisionScreen({
           )}
 
           <div
-            className={`d-flex mt-4 ${
-              onBack ? "justify-content-between" : "justify-content-end"
-            }`}
+            className={`d-flex mt-4 ${onBack ? "justify-content-between" : "justify-content-end"
+              }`}
           >
             {onBack && (
               <ClayButton displayType="secondary" onClick={handleBack}>

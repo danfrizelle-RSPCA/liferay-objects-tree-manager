@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 
 import ClayButton from "@clayui/button";
 import ClayModal, { useModal } from "@clayui/modal";
-import ClayIcon from '@clayui/icon';
-import AccordionEditor from '../../shared/components/AccordionEditor';
-import NodeFieldsForm from '../../shared/components/NodeFieldsForm';
+import AccordionEditor from '../components/AccordionEditor';
+import NodeFieldsForm from '../components/NodeFieldsForm';
 import { useCkEditorConfig } from '../../shared/hooks/useCkEditorConfig';
 
 function NodeUpdateModal(props) {
@@ -126,7 +125,7 @@ function NodeUpdateModal(props) {
                 onOpenChange(false);
               }}
             >
-              <ClayIcon symbol="trash"/>Delete
+              Delete
             </ClayButton>
           </ClayButton.Group>
         }
