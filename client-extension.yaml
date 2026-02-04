@@ -1,6 +1,7 @@
 assemble:
     - from: build/static
       into: static
+      
 graph-editor-import-maps-entry:
     bareSpecifier: graphEditor
     name: Graph Editor JS Import Maps Entry

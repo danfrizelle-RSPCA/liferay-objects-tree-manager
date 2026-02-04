@@ -9,24 +9,83 @@ The runtime is designed for Liferay Object APIs (Headless) and is configured via
 
 ---
 
-## Quick start (local dev)
+## Build & use end-to-end (Liferay Content Pages)
 
-Prereqs:
-- Node.js + Yarn
+This project is deployed as a **Liferay Client Extension** and used via **Fragments** on Content Pages.
 
-Commands:
+At a high level:
+
+1) Vite builds JS/CSS into `build/static/`.
+2) The client extension packages those files as deployed `static/` resources.
+3) The Fragment JS does `import 'graphEditor'` / `import 'graphNavigator'`.
+4) The imported module defines a custom element (`<graph-editor>` / `<graph-navigator>`), which then mounts React.
+
+### 1) Install dependencies
 
 ```bash
 yarn install
-yarn dev
 ```
 
-Then open the local `index.html` page served by Vite.
-
-Build output:
+### 2) Build the assets (Vite)
 
 ```bash
-yarn build
+yarn run build
+```
+
+This produces hashed bundles under `build/static/assets/`, for example:
+
+- `editor-<hash>.js`
+- `navigator-<hash>.js`
+- `chunk-<name>-<hash>.js`
+- `editor-<hash>.css`
+- `navigator-<hash>.css`
+
+### 3) Deploy from your Liferay Workspace
+
+From the Liferay workspace root (Windows examples):
+
+```
+blade deploy
+```
+
+### 4) Add the fragments to a Content Page
+
+These fragments are included in this repo:
+
+- `fragments/tree---editor/` (Tree - Editor)
+- `fragments/tree---navigator/` (Tree - Navigator)
+
+Add one of them to a Content Page. Liferay will render the fragment HTML (which includes `<graph-editor>` / `<graph-navigator>` plus configuration tags) and execute the fragment JS.
+
+### 5) Confirm the client extension wiring
+
+`client-extension.yaml` is the bridge between the Vite output and Liferay:
+
+- `assemble: from: build/static into: static`
+  - makes the Vite output available as deployed static resources.
+- `jsImportMapsEntry`
+  - registers bare specifiers (`graphEditor`, `graphNavigator`) that point to `assets/editor-*.js` and `assets/navigator-*.js`.
+- `globalCSS`
+  - loads `assets/editor-*.css` and `assets/navigator-*.css` globally (no import map required for CSS).
+
+### How the React UI actually starts
+
+1) Fragment JS runs and imports `graphEditor` / `graphNavigator`.
+2) The imported bundle defines a custom element via `customElements.define(...)`.
+3) When the browser connects the element, `connectedCallback()` runs.
+4) The element creates a `.react-root` div and mounts React with `createRoot(...).render(...)`.
+
+### Bundling note: `LOCAL_DEV`
+
+In `vite.config.js` the build is different depending on `LOCAL_DEV`:
+
+- `LOCAL_DEV=true`: bundles everything it can (useful for standalone testing).
+- default: keeps `react`, `react-dom`, and `@clayui/*` as external so Liferay can provide them.
+
+Build a self-contained bundle (no Liferay import maps) with:
+
+```bat
+set LOCAL_DEV=true&& yarn run build
 ```
 
 ---
@@ -42,7 +101,7 @@ Two separate entrypoints register the custom elements:
 
 Both web components:
 
-1. Read configuration from child tags (`<tree/>`, `<node/>`, `<edge/>`) and element attributes.
+1. Read configuration from child tags (`<tree/>`, `<node/>`, `<edge/>`, `<accordion/>`) and element attributes.
 2. Instantiate service classes under `src/services/`.
 3. Pass services into React components via props.
 
@@ -99,11 +158,14 @@ Accordion fetch behavior:
 
 ## Configuration (HTML/FTL)
 
-Both web components are configured using the same 3 child tags:
+Both web components are configured using the same 4 child tags:
 
 - `<tree ... />`
 - `<node ... />`
 - `<edge ... />`
+- `<accordion ... />`
+
+Note: the custom elements currently expect all four child tags to exist. If `<accordion />` is omitted, the web component returns early and React will not mount.
 
 Example (navigator):
 
@@ -111,8 +173,6 @@ Example (navigator):
 <graph-navigator
   portal-base-url="${themeDisplay.getPortalURL()}/o/c/"
   tree-erc="..."
-  edge-dpt-base-url="/web/.../e/.../"
-  node-dpt-base-url="/web/.../e/.../"
 >
   <tree
     object-name="tree"
@@ -138,6 +198,13 @@ Example (navigator):
     source-relationship="source"
     target-relationship="target"
   />
+  <accordion
+    object-name="accordion"
+    object-name-plural="accordions"
+    node-accordions-id="r_accordion_c_nodeId"
+    heading="heading"
+    content="content"
+  />
 </graph-navigator>
 ```
 
@@ -145,7 +212,11 @@ Important attributes:
 
 - `portal-base-url`: base for Liferay Object APIs, typically `.../o/c/`
 - `tree-erc` (navigator only): external reference code to resolve the tree id
-- `edge-dpt-base-url` / `node-dpt-base-url`: used to build pop-up (DPT) URLs in modals
+
+Accordion configuration (from `<accordion />`):
+
+- `node-accordions-id`: relationship id field used by `AccordionService` (example: `r_accordion_c_nodeId`)
+- `heading` / `content`: field names on the Accordion object used for display
 
 How relationship ids are derived (in `src/graph-editor-index.jsx` / `src/graph-navigator-index.jsx`):
 
@@ -257,11 +328,6 @@ Concrete examples with those values:
 - `PUT {base}accordions/{accordionId}`
 - `DELETE {base}accordions/{accordionId}`
 
-### DPT popup URLs (not headless APIs)
-
-- node: `{node-dpt-base-url}{nodeId}?p_p_state=pop_up`
-- edge: `{edge-dpt-base-url}{edgeId}?p_p_state=pop_up`
-
 ---
 
 ## Folder map (src/)
@@ -283,12 +349,3 @@ Concrete examples with those values:
 - `src/shared/hooks/`: shared hooks (e.g., CKEditor config)
 - `src/services/`: API wrappers
 - `src/editor/utils/layoutUtils.js`: editor-only auto-layout helpers
-
----
-
-## Notes / gotchas
-
-- `ApiService` relies on `window.Liferay.Util.fetch`. In local dev, ensure your environment provides it (your dev setup likely shims it).
-- Field names differ between fragments (`label/body/image` vs `name/description`). Make sure the markup matches your Liferay object schema.
-- Accordion loads can be heavy if `content` is large; the code requests only `id,heading,content`, but the payload size is still driven by your stored HTML.
-- Non-API URLs: images may load from `node.nodeImage.link.href`, and some shared components embed YouTube (`https://www.youtube.com/embed/...`) or open external links via `window.open()`.
