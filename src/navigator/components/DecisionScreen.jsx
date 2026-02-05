@@ -15,6 +15,8 @@ export default function DecisionScreen({
   const [selectedEdgeId, setSelectedEdgeId] = useState(null);
   const [error, setError] = useState("");
 
+  const selectedEdge = selectedEdgeId ? edges.find((edge) => edge.id === selectedEdgeId) : null;
+
   const decisionScreenRef = useRef(null);
   const scrollToTop = useScrollToTop(decisionScreenRef);
 
@@ -141,13 +143,25 @@ export default function DecisionScreen({
               }`}
           >
             {onBack && (
-              <ClayButton displayType="secondary" onClick={handleBack}>
+              <ClayButton
+                id="js-backButton"
+                displayType="secondary"
+                onClick={handleBack}
+                data-analytics-label="back"
+                data-analytics-title={node?.nodeTitle ?? ""}
+              >
                 Back
               </ClayButton>
             )}
 
             {edges.length > 0 && (
-              <ClayButton displayType="primary" onClick={handleNext}>
+              <ClayButton
+                id="js-nextButton"
+                displayType="primary"
+                onClick={handleNext}
+                data-analytics-label={selectedEdge?.label ?? ""}
+                data-analytics-title={node?.nodeTitle ?? ""}
+              >
                 Next
               </ClayButton>
             )}
