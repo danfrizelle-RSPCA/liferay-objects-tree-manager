@@ -23,18 +23,17 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
 
   }, [setNodes, setEdges]);
 
-  const loadGraphData = useCallback((treeId, setLoading) => {
-    // show loader in calling component
+  const loadGraphData = useCallback(async (treeId, setLoading) => {
     setLoading(true);
 
-    // fetch nodes, then edges, then update React Flow state
-    nodeService.getNodes(treeId).then(nodeData => {
+    try {
+      const nodeData = await nodeService.getNodes(treeId);
       const nodes = nodeData.map(node => ({
         id: '' + node.id,
         type: 'custom',
         position: { x: node.xPosition, y: node.yPosition },
         draggable: true,
-        data: { 
+        data: {
           nodeTitle: node.nodeTitle,
           nodeText: node.nodeText,
           nodeImage: node.nodeImage,
@@ -44,25 +43,25 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
         }
       }));
 
-      edgeService.getEdges(treeId).then(edgeData => {
-        const edges = edgeData.map(edge => ({
-          id: '' + edge.id,
-          source: '' + edge.sourceNodeId, 
-          target: '' + edge.targetNodeId, 
-          label: edge.edgeLabel,
-          data: { 
-            text: edge.edgeLabel,
-            treeId: treeId
-          }
-        }));
+      const edgeData = await edgeService.getEdges(treeId);
+      const edges = edgeData.map(edge => ({
+        id: '' + edge.id,
+        source: '' + edge.sourceNodeId,
+        target: '' + edge.targetNodeId,
+        label: edge.edgeLabel,
+        data: {
+          text: edge.edgeLabel,
+          treeId: treeId
+        }
+      }));
 
-        // update state and center view
-        setLoading(false);
-        setNodes(nodes);
-        setEdges(edges);
-        fitView();
-      });
-    });
+      setNodes(nodes);
+      setEdges(edges);
+      fitView();
+    }
+    finally {
+      setLoading(false);
+    }
   }, [nodeService, edgeService, fitView, setNodes, setEdges]);
 
   return { nodes, setNodes, onNodesChange, edges, setEdges, onEdgesChange, loadGraphData, wipeGraphData };

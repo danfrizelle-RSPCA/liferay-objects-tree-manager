@@ -1,4 +1,16 @@
 {
 	"fieldSets": [
+		{
+			"label": "General",
+			"fields": [
+				{
+					"name": "treeERC",
+					"label": "Tree ERC",
+					"type": "text",
+					"defaultValue": "6442d65a-0e44-fc4a-90b3-69bbc99186e9",
+					"description": "You can find the ERC in the tree's object"
+				}
+			]
+		}
 	]
 }

@@ -88,22 +88,20 @@ class NodeService {
 
     setNodeAsStart(nodeId) {
 
-        ApiService.makeCall(this.baseURL + this.nodeObjectName + "/" + nodeId + "?fields=id%2C" + this.treeNodesRelationshipId, "GET").then(data => {
-
-            this.getNodes(data[this.treeNodesRelationshipId]).then(nodes => {
-
-                nodes.forEach(node => {
-    
-                    let body = {
-                        [this.nodeRoot]: node.id == nodeId
-                    }
-                    ApiService.makeCall(this.baseURL + this.nodeObjectName + "/" + node.id, "PATCH", body);
-    
-                });
-    
+        return ApiService.makeCall(
+            this.baseURL + this.nodeObjectName + "/" + nodeId + "?fields=id%2C" + this.treeNodesRelationshipId,
+            "GET"
+        ).then(data => {
+            return this.getNodes(data[this.treeNodesRelationshipId]).then(nodes => {
+                return Promise.all(
+                    nodes.map(node => {
+                        const body = {
+                            [this.nodeRoot]: node.id == nodeId
+                        };
+                        return ApiService.makeCall(this.baseURL + this.nodeObjectName + "/" + node.id, "PATCH", body);
+                    })
+                );
             });
-    
-
         });
 
     }
