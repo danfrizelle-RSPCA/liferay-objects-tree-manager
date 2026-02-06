@@ -1,4 +1,32 @@
 <graph-navigator portal-base-url="${themeDisplay.getPortalURL()}/o/c/" tree-erc="${configuration.treeERC}">
+	<div class="aj-preload" aria-hidden="true">
+		<div class="row d-flex justify-content-between bg-rabbit-white">
+			<div class="col-md-7 p-5">
+				<div class="aj-skeleton aj-skeleton--title"></div>
+
+				<div class="mt-4">
+					<div class="aj-skeleton aj-skeleton--line"></div>
+					<div class="aj-skeleton aj-skeleton--line"></div>
+					<div class="aj-skeleton aj-skeleton--line aj-skeleton--lineShort"></div>
+				</div>
+
+				<div class="options-group mt-4">
+					<div class="aj-skeleton aj-skeleton--option"></div>
+					<div class="aj-skeleton aj-skeleton--option"></div>
+					<div class="aj-skeleton aj-skeleton--option"></div>
+				</div>
+
+				<div class="d-flex mt-4 justify-content-end">
+					<div class="aj-skeleton aj-skeleton--button"></div>
+				</div>
+			</div>
+
+			<div class="col-md-5 d-flex align-items-stretch p-0">
+				<div class="aj-skeleton aj-skeleton--image"></div>
+			</div>
+		</div>
+	</div>
+
 	<tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
 	<node object-name="node" object-name-plural="nodes" label="label" text="body" root="root" image="image" x="xCoordinates" y="yCoordinates" />
 	<edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />

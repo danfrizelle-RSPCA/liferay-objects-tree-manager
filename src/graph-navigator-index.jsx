@@ -14,9 +14,13 @@ class GraphNavigatorWebComponent extends HTMLElement {
 	constructor() {
 		super();
 		this._rootInstance = null;
+		this._mountObserver = null;
 	}
 
 	connectedCallback() {
+		// Show fragment-provided skeleton until React actually mounts.
+		this.setAttribute('data-react-mounted', 'false');
+
 		if (!this.querySelector('.react-root')) {
 			const reactRoot = document.createElement('div');
 			reactRoot.className = 'react-root';
@@ -27,10 +31,37 @@ class GraphNavigatorWebComponent extends HTMLElement {
 	}
 
 	disconnectedCallback() {
+		if (this._mountObserver) {
+			this._mountObserver.disconnect();
+			this._mountObserver = null;
+		}
+		this.removeAttribute('data-react-mounted');
+
 		if (this._rootInstance) {
 			this._rootInstance.unmount();
 			this._rootInstance = null;
 		}
+	}
+
+	_waitForReactMount(reactRoot) {
+		if (this._mountObserver) {
+			return;
+		}
+
+		const markMountedIfReady = () => {
+			if (reactRoot.childNodes && reactRoot.childNodes.length > 0) {
+				this.setAttribute('data-react-mounted', 'true');
+				if (this._mountObserver) {
+					this._mountObserver.disconnect();
+					this._mountObserver = null;
+				}
+			}
+		};
+
+		markMountedIfReady();
+
+		this._mountObserver = new MutationObserver(() => markMountedIfReady());
+		this._mountObserver.observe(reactRoot, { childList: true, subtree: true });
 	}
 
 	_renderReact() {
@@ -38,6 +69,8 @@ class GraphNavigatorWebComponent extends HTMLElement {
 		if (!reactRoot) {
 			return;
 		}
+
+		this._waitForReactMount(reactRoot);
 
 		if (!this._rootInstance) {
 			this._rootInstance = createRoot(reactRoot);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import LoadingModal from "../shared/modals/LoadingModal";
 import { useBrowseGraphData } from "./hooks/useBrowseGraphData";
 import { useNodeAccordions } from "./hooks/useNodeAccordions";
 import DecisionScreen from "./components/DecisionScreen";
@@ -56,25 +55,36 @@ function GraphNavigator(props) {
   };
 
   return (
-    <div>
-      {nodes
-        .filter((node) => node.id === currentNodeId)
-        .map((node) => (
-          <>
-            {console.log("Rendering DecisionScreen for node:", node)}
-            {console.log("Current Node ID:", currentNodeId)}
-            <DecisionScreen
-              key={node.id}
-              node={node}
-              baseURL={props.treeService.baseURL}
-              accordions={accordionsByNodeId[currentNodeId]}
-              edges={edges.filter((edge) => edge.source === currentNodeId)}
-              onSelect={handleSelectNode}
-              onBack={history.length > 0 ? handleBack : null}
-            />
-          </>
-        ))}
-      {loading && <LoadingModal />}
+    <div className="graph-navigator" aria-busy={loading}>
+      {loading ? (
+        <DecisionScreen
+          loading={true}
+          node={null}
+          edges={[]}
+          accordions={[]}
+          onSelect={() => {}}
+          onBack={null}
+          baseURL={props.treeService.baseURL}
+        />
+      ) : (
+        nodes
+          .filter((node) => node.id === currentNodeId)
+          .map((node) => (
+            <>
+              {console.log("Rendering DecisionScreen for node:", node)}
+              {console.log("Current Node ID:", currentNodeId)}
+              <DecisionScreen
+                key={node.id}
+                node={node}
+                baseURL={props.treeService.baseURL}
+                accordions={accordionsByNodeId[currentNodeId]}
+                edges={edges.filter((edge) => edge.source === currentNodeId)}
+                onSelect={handleSelectNode}
+                onBack={history.length > 0 ? handleBack : null}
+              />
+            </>
+          ))
+      )}
     </div>
   );
 }

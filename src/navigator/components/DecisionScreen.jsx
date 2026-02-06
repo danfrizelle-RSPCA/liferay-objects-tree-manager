@@ -11,6 +11,7 @@ export default function DecisionScreen({
   onSelect,
   onBack,
   baseURL,
+  loading = false,
 }) {
   const [selectedEdgeId, setSelectedEdgeId] = useState(null);
   const [error, setError] = useState("");
@@ -20,7 +21,39 @@ export default function DecisionScreen({
   const decisionScreenRef = useRef(null);
   const scrollToTop = useScrollToTop(decisionScreenRef);
 
-  if (!node) return null;
+  if (!node && !loading) return null;
+
+  if (loading) {
+    return (
+      <div className="decision-screen" ref={decisionScreenRef} aria-busy="true">
+        <div className="row d-flex justify-content-between bg-rabbit-white">
+          <div className="col-md-7 p-5">
+            <div className="aj-skeleton aj-skeleton--title" />
+
+            <div className="mt-4">
+              <div className="aj-skeleton aj-skeleton--line" />
+              <div className="aj-skeleton aj-skeleton--line" />
+              <div className="aj-skeleton aj-skeleton--line aj-skeleton--line-short" />
+            </div>
+
+            <div className="options-group mt-4">
+              <div className="aj-skeleton aj-skeleton--option" />
+              <div className="aj-skeleton aj-skeleton--option" />
+              <div className="aj-skeleton aj-skeleton--option" />
+            </div>
+
+            <div className="d-flex mt-4 justify-content-end">
+              <div className="aj-skeleton aj-skeleton--button" />
+            </div>
+          </div>
+
+          <div className="col-md-5 d-flex align-items-stretch p-0">
+            <div className="aj-skeleton aj-skeleton--image" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const imageSrc = node.nodeImage?.link?.href
     ? "http://localhost:8080" + node.nodeImage.link.href
@@ -82,6 +115,7 @@ export default function DecisionScreen({
                     <input
                       type="radio"
                       id={`edge-${edge.id}`}
+                      className="radio-input"
                       name="nextNode"
                       value={edge.id}
                       checked={isSelected}
@@ -90,38 +124,14 @@ export default function DecisionScreen({
                         setSelectedEdgeId(edge.id);
                         setError("");
                       }}
-                      style={{
-                        position: "absolute",
-                        width: "1px",
-                        height: "1px",
-                        padding: 0,
-                        margin: "-1px",
-                        overflow: "hidden",
-                        clip: "rect(0, 0, 0, 0)",
-                        whiteSpace: "nowrap",
-                        border: 0,
-                      }}
                     />
 
                     <label
                       htmlFor={`edge-${edge.id}`}
-                      className="radio-card-label d-flex align-items-center p-3 bg-sheep-white"
-                      style={{ cursor: "pointer", borderRadius: "8px" }}
+                      className="radio-label d-flex align-items-center p-3 bg-sheep-white"
                     >
                       <div
-                        className="aj__custom-radio mr-3"
-                        style={{
-                          width: "20px",
-                          height: "20px",
-                          border: "2px solid var(--rspca-blue, #2622F7)",
-                          borderRadius: "50%",
-                          backgroundColor: isSelected
-                            ? "var(--rspca-blue, #2622F7)"
-                            : "transparent",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+                        className={"custom-radio mr-3 " + (isSelected ? "selected" : "")}
                       >
                         {isSelected && (
                           <i
@@ -148,7 +158,7 @@ export default function DecisionScreen({
                 displayType="secondary"
                 onClick={handleBack}
                 data-analytics-label="back"
-                data-analytics-title={node?.nodeTitle ?? ""}
+                data-analytics-title={selectedEdge?.label ?? node?.nodeTitle ?? ""}
               >
                 Back
               </ClayButton>
@@ -168,12 +178,12 @@ export default function DecisionScreen({
           </div>
         </div>
 
-        <div className="col-md-5 d-flex align-items-stretch p-0">
+        <div className="col-md-5 p-0">
           {imageSrc && (
             <img
               src={imageSrc}
               alt={node.nodeImage?.link?.label ?? ""}
-              className="img-fluid aj__img-cover"
+              className="ds-img"
             />
           )}
         </div>
