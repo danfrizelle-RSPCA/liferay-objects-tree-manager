@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import GraphNavigator from './navigator/GraphNavigator';
+import GraphNavigator from './flow-navigator/GraphNavigator';
 
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';

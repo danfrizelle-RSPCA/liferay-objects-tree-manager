@@ -1,5 +1,4 @@
 import ApiService from './ApiService';
-
 /* TreeService: helper for listing, creating and resolving trees.
 Methods return normalized shapes and are used by both editor and navigator flows.
 Notably `getTree(erc)` resolves an external reference code to the internal id which is then used by node/edge services. */

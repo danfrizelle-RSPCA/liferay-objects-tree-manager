@@ -2,29 +2,29 @@ assemble:
     - from: build/static
       into: static
       
-graph-editor-import-maps-entry:
-    bareSpecifier: graphEditor
-    name: Graph Editor JS Import Maps Entry
+flow-editor-import-maps-entry:
+    bareSpecifier: flowEditor
+    name: Flow Editor JS Import Maps Entry
     type: jsImportMapsEntry
-    url: assets/editor-*.js
-graph-editor-custom-element-css:
-    url: assets/editor-*.css
+    url: assets/flow-editor-*.js
+flow-editor-custom-element-css:
+    url: assets/flow-editor-*.css
     type: globalCSS
-    name: Graph Editor CSS
+    name: Flow Editor CSS
 
-graph-navigator-import-maps-entry:
-    bareSpecifier: graphNavigator
-    name: Graph Navigator JS Import Maps Entry
+flow-navigator-import-maps-entry:
+    bareSpecifier: flowNavigator
+    name: Flow Navigator JS Import Maps Entry
     type: jsImportMapsEntry
-    url: assets/navigator-*.js
-graph-navigator-custom-element-css:
-    url: assets/navigator-*.css
+    url: assets/flow-navigator-*.js
+flow-navigator-custom-element-css:
+    url: assets/flow-navigator-*.css
     type: globalCSS
-    name: Graph Navigator CSS
-graph-navigator-user-agent:
+    name: Flow Navigator CSS
+flow-navigator-user-agent:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Graph Navigator User Agent
+    name: Flow Navigator User Agent
     scopes:
         - c_decisiontree.read
         - c_question.read

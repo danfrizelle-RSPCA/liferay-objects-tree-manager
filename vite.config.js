@@ -13,8 +13,8 @@ export default defineConfig({
             // Multiple entrypoints => produces multiple top-level bundles.
             // These names become the output filenames via entryFileNames below.
             input: {
-				editor: path.resolve(__dirname, 'src/graph-editor-index.jsx'),
-				navigator: path.resolve(__dirname, 'src/graph-navigator-index.jsx'),
+				'flow-editor': path.resolve(__dirname, 'src/graph-editor-index.jsx'),
+				'flow-navigator': path.resolve(__dirname, 'src/graph-navigator-index.jsx'),
             },
             // Dependencies listed here are NOT bundled into the output.
             // The emitted JS will keep imports like `import React from 'react'`.
@@ -29,10 +29,10 @@ export default defineConfig({
                     'react-scripts'
                 ],
             output: {
-                // Entry bundle filenames, e.g. assets/editor-<hash>.js
+                // Entry bundle filenames, e.g. assets/flow-editor-<hash>.js
                 entryFileNames: 'assets/[name]-[hash].js',
                 // Shared code-split chunks, e.g. assets/chunk-<hash>.js
-                chunkFileNames: 'assets/chunk-[name]-[hash].js',
+                chunkFileNames: 'assets/[name]-[hash].js',
                 // Non-JS assets emitted by Vite/Rollup (CSS, images, fonts, etc.)
                 assetFileNames: (assetInfo) => {
                     const name = assetInfo.name ?? 'asset';

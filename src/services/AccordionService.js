@@ -1,5 +1,4 @@
 import ApiService from './ApiService';
-
 /* AccordionService: encapsulates CRUD operations for accordion objects.
 
 Constructor takes a set of field/object names so the same class can be reused for different Liferay object schemas.

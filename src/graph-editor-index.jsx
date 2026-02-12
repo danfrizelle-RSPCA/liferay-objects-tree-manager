@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 
 import 'ckeditor5/ckeditor5.css';
 
-import GraphEditor from './editor/GraphEditor';
+import GraphEditor from './flow-editor/GraphEditor';
 
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';
