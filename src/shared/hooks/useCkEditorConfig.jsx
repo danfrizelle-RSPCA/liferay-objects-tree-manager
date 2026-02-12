@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import {
-  Autoformat,
-  Autosave,
   BalloonToolbar,
   Bold,
   Essentials,
@@ -11,10 +9,8 @@ import {
   Italic,
   Link,
   List,
-  Mention,
   Paragraph,
   RemoveFormat,
-  TextTransformation,
   Underline,
 } from 'ckeditor5';
 
@@ -43,8 +39,6 @@ export const useCkEditorConfig = () => {
           shouldNotGroupWhenFull: false,
         },
         plugins: [
-          Autoformat,
-          Autosave,
           BalloonToolbar,
           Bold,
           Essentials,
@@ -53,10 +47,8 @@ export const useCkEditorConfig = () => {
           Italic,
           Link,
           List,
-          Mention,
           Paragraph,
           RemoveFormat,
-          TextTransformation,
           Underline,
         ],
         balloonToolbar: [
@@ -114,12 +106,6 @@ export const useCkEditorConfig = () => {
           ],
         },
         licenseKey: LICENSE_KEY,
-        autosave: {
-          waitingTime: 1500,
-          save: async () => {
-            // Intentionally no-op. We still persist data via React state.
-          },
-        },
         link: {
           addTargetToExternalLinks: true,
           defaultProtocol: 'https://',
@@ -132,14 +118,6 @@ export const useCkEditorConfig = () => {
               },
             },
           },
-        },
-        mention: {
-          feeds: [
-            {
-              marker: '@',
-              feed: [],
-            },
-          ],
         },
         placeholder: 'Type or paste your content here!',
       },
