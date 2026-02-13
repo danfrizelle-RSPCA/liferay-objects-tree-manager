@@ -96,8 +96,8 @@ set LOCAL_DEV=true&& yarn run build
 
 Two separate entrypoints register the custom elements:
 
-- `src/graph-editor-index.jsx` → registers `<graph-editor>` and renders `src/editor/GraphEditor.jsx`
-- `src/graph-navigator-index.jsx` → registers `<graph-navigator>` and renders `src/navigator/GraphNavigator.jsx`
+- `src/flow-editor-index.jsx` → registers `<graph-editor>` and renders `src/editor/FlowEditor.jsx`
+- `src/flow-navigator-index.jsx` → registers `<graph-navigator>` and renders `src/navigator/FlowNavigator.jsx`
 
 Both web components:
 
@@ -118,9 +118,9 @@ Core domain services:
 
 ### Two flows
 
-#### 1) Editor flow (`GraphEditor`)
+#### 1) Editor flow (`FlowEditor`)
 
-`GraphEditor` uses `@xyflow/react` (React Flow) to render a canvas with:
+`FlowEditor` uses `@xyflow/react` (React Flow) to render a canvas with:
 
 - custom nodes (`src/editor/flow/CustomNode.jsx`)
 - custom edges (`src/editor/flow/CustomEdge.jsx`)
@@ -140,9 +140,9 @@ UI actions are handled via Clay modals in `src/editor/modals/`:
 
 The node edit modal (`NodeUpdateModal`) also manages accordion CRUD via `AccordionService`.
 
-#### 2) Navigator flow (`GraphNavigator`)
+#### 2) Navigator flow (`FlowNavigator`)
 
-`GraphNavigator` is a read-only experience:
+`FlowNavigator` is a read-only experience:
 
 - loads the tree by `tree-erc`
 - loads nodes + edges
@@ -218,7 +218,7 @@ Accordion configuration (from `<accordion />`):
 - `node-accordions-id`: relationship id field used by `AccordionService` (example: `r_accordion_c_nodeId`)
 - `heading` / `content`: field names on the Accordion object used for display
 
-How relationship ids are derived (in `src/graph-editor-index.jsx` / `src/graph-navigator-index.jsx`):
+How relationship ids are derived (in `src/flow-editor-index.jsx` / `src/flow-navigator-index.jsx`):
 
 - edge source/target ids:
   - `r_{source-relationship}_c_{nodeObjectName}Id`
@@ -234,7 +234,7 @@ How relationship ids are derived (in `src/graph-editor-index.jsx` / `src/graph-n
 
 ### Node (navigator)
 
-A node object in `GraphNavigator` state is normalized to:
+A node object in `FlowNavigator` state is normalized to:
 
 ```js
 {
@@ -332,15 +332,15 @@ Concrete examples with those values:
 
 ## Folder map (src/)
 
-- `src/graph-editor-index.jsx`: defines `<graph-editor>` web component and wires configuration → services → React
-- `src/graph-navigator-index.jsx`: defines `<graph-navigator>` web component and wires configuration → services → React
+- `src/flow-editor-index.jsx`: defines `<graph-editor>` web component and wires configuration → services → React
+- `src/flow-navigator-index.jsx`: defines `<graph-navigator>` web component and wires configuration → services → React
 - `src/editor/`: editor-only UI (React Flow) + modals + hooks + custom node/edge renderers
-  - `src/editor/GraphEditor.jsx`: editor canvas UI (React Flow) + modal orchestration
+  - `src/editor/FlowEditor.jsx`: editor canvas UI (React Flow) + modal orchestration
   - `src/editor/hooks/`: composable editor behaviors (tree/node/edge CRUD)
   - `src/editor/modals/`: Clay modal UIs used by the editor
   - `src/editor/flow/`: `CustomNode` / `CustomEdge` renderers
 - `src/navigator/`: read-only navigator UI + hooks
-  - `src/navigator/GraphNavigator.jsx`: decision navigator + per-node accordion fetch cache
+  - `src/navigator/FlowNavigator.jsx`: decision navigator + per-node accordion fetch cache
   - `src/navigator/components/DecisionScreen.jsx`: renders current node + answer options; shows accordions on leaf nodes
   - `src/navigator/hooks/`: browse graph data loader + scrolling helpers
 - `src/shared/`: shared UI used by both editor + navigator

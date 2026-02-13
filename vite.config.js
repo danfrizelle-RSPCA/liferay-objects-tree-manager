@@ -13,8 +13,8 @@ export default defineConfig({
             // Multiple entrypoints => produces multiple top-level bundles.
             // These names become the output filenames via entryFileNames below.
             input: {
-				'flow-editor': path.resolve(__dirname, 'src/graph-editor-index.jsx'),
-				'flow-navigator': path.resolve(__dirname, 'src/graph-navigator-index.jsx'),
+				'flow-editor': path.resolve(__dirname, 'src/flow-editor-index.jsx'),
+				'flow-navigator': path.resolve(__dirname, 'src/flow-navigator-index.jsx'),
             },
             // Dependencies listed here are NOT bundled into the output.
             // The emitted JS will keep imports like `import React from 'react'`.
@@ -38,7 +38,7 @@ export default defineConfig({
                     const name = assetInfo.name ?? 'asset';
                     const ext = path.extname(name);
                     const base = path.basename(name, ext);
-                    return `assets/${base}-[hash][extname]`;
+                    return `assets/${base}[extname]`;
                 },
             },
         },

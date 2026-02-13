@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import '@xyflow/react/dist/style.css';
 import '@clayui/css/lib/css/atlas.css';
-import "./GraphEditor.css";
+import "./FlowEditor.css";
 
 import {
   ReactFlow,
@@ -35,15 +35,15 @@ import TreeSelectionModal from "./modals/TreeSelectionModal";
 import TreeDeletionModal from "./modals/TreeDeletionModal";
 import TreeCreationModal from "./modals/TreeCreationModal";
 
-/* GraphEditor: main editing UI
+/* FlowEditor: main editing UI
 - composes many hooks located under `src/flow-editor/hooks/` to handle tree selection, node/edge creation and updates, and tree lifecycle
-- delegates API operations to service instances passed in via props (see `src/graph-editor-index.jsx` where services are constructed)
+- delegates API operations to service instances passed in via props (see `src/flow-editor-index.jsx` where services are constructed)
 - uses `@xyflow/react` for the canvas; node rendering is provided by `editor/flow/CustomNode.jsx` */
 
 const nodeTypes = { custom: CustomNode };
 const edgeTypes = { custom: CustomEdge };
 
-function GraphEditor(props) {
+function FlowEditor(props) {
   const { fitView } = useReactFlow();
   const [loading, setLoading] = useState(false);
   const [treeId, setTreeId] = useState();
@@ -325,4 +325,4 @@ function GraphEditor(props) {
   );
 }
 
-export default GraphEditor;
+export default FlowEditor;

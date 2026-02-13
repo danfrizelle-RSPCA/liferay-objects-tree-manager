@@ -77,14 +77,14 @@
     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros
     bibendum elit.</p> -->
-  <!-- Graph Navigator Component (for local use) --
-   <script type="module" src="/src/graph-navigator-index.jsx"></script>
-  <graph-navigator portal-base-url="http://localhost:8080/o/c/" tree-erc="6442d65a-0e44-fc4a-90b3-69bbc99186e9">
+  <!-- Flow Navigator Component (for local use) -->
+   <script type="module" src="/src/flow-navigator-index.jsx"></script>
+  <flow-navigator portal-base-url="http://localhost:8080/o/c/" tree-erc="6442d65a-0e44-fc4a-90b3-69bbc99186e9">
     <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
     <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
     <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
     <accordion object-name="accordion" object-name-plural="accordions" label="label" node-accordions-id="r_accordion_c_nodeId" heading="heading" content="content" />
-  </graph-navigator> -->
+  </flow-navigator>
 
   <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
     aliqua.
@@ -101,16 +101,16 @@
     Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac,
     ultricies eu, pede.</p> -->
 
-  <!-- Graph Editor Component (for local use) -->
-   <script type="module" src="/src/graph-editor-index.jsx"></script>
-    <graph-editor
+  <!-- Flow Editor Component (for local use) --
+   <script type="module" src="/src/flow-editor-index.jsx"></script>
+    <flow-editor
         portal-base-url="http://localhost:8080/o/c/"
     >
       <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
       <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
       <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
       <accordion object-name="accordion" object-name-plural="accordions" label="label" node-accordions-id="r_accordion_c_nodeId" heading="heading" content="content" />
-    </graph-editor>
+    </flow-editor> -->
 </body>
 
 </html>

@@ -1,26 +1,26 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import 'ckeditor5/ckeditor5.css';
-
-import GraphEditor from './flow-editor/GraphEditor';
+import FlowNavigator from './flow-navigator/FlowNavigator';
 
 import TreeService from './services/TreeService';
 import NodeService from './services/NodeService';
 import EdgeService from './services/EdgeService';
 import AccordionService from './services/AccordionService';
 
-import { ReactFlowProvider } from '@xyflow/react';
-
-class GraphEditorWebComponent extends HTMLElement {
+class FlowNavigatorWebComponent extends HTMLElement {
 	baseURL = 'http://localhost:8080/o/c/';
 
 	constructor() {
 		super();
 		this._rootInstance = null;
+		this._mountObserver = null;
 	}
 
 	connectedCallback() {
+		// Show fragment-provided skeleton until React actually mounts.
+		this.setAttribute('data-react-mounted', 'false');
+
 		if (!this.querySelector('.react-root')) {
 			const reactRoot = document.createElement('div');
 			reactRoot.className = 'react-root';
@@ -31,10 +31,37 @@ class GraphEditorWebComponent extends HTMLElement {
 	}
 
 	disconnectedCallback() {
+		if (this._mountObserver) {
+			this._mountObserver.disconnect();
+			this._mountObserver = null;
+		}
+		this.removeAttribute('data-react-mounted');
+
 		if (this._rootInstance) {
 			this._rootInstance.unmount();
 			this._rootInstance = null;
 		}
+	}
+
+	_waitForReactMount(reactRoot) {
+		if (this._mountObserver) {
+			return;
+		}
+
+		const markMountedIfReady = () => {
+			if (reactRoot.childNodes && reactRoot.childNodes.length > 0) {
+				this.setAttribute('data-react-mounted', 'true');
+				if (this._mountObserver) {
+					this._mountObserver.disconnect();
+					this._mountObserver = null;
+				}
+			}
+		};
+
+		markMountedIfReady();
+
+		this._mountObserver = new MutationObserver(() => markMountedIfReady());
+		this._mountObserver.observe(reactRoot, { childList: true, subtree: true });
 	}
 
 	_renderReact() {
@@ -42,6 +69,8 @@ class GraphEditorWebComponent extends HTMLElement {
 		if (!reactRoot) {
 			return;
 		}
+
+		this._waitForReactMount(reactRoot);
 
 		if (!this._rootInstance) {
 			this._rootInstance = createRoot(reactRoot);
@@ -88,59 +117,58 @@ class GraphEditorWebComponent extends HTMLElement {
 		const treeNodesRelationshipId = 'r_' + treeNodesRelationshipName + '_c_' + treeObjectName + 'Id';
 		const treeEdgesRelationshipId = 'r_' + treeEdgesRelationshipName + '_c_' + treeObjectName + 'Id';
 
+		const treeERC = this.getAttribute('tree-erc');
 		const portalBaseUrl = this.getAttribute('portal-base-url');
 
 		this._rootInstance.render(
-			<ReactFlowProvider>
-				<GraphEditor
-					treeId={null}
-					treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
-					nodeService={
-						new NodeService(
-							portalBaseUrl,
-							nodeObjectNamePlural,
-							treeObjectNamePlural,
-							treeNodesRelationshipName,
-							treeNodesRelationshipId,
-							nodeTitle,
-							nodeText,
-							nodeImage,
-							nodeRoot,
-							xPosition,
-							yPosition
-						)
-					}
-					edgeService={
-						new EdgeService(
-							portalBaseUrl,
-							edgeObjectNamePlural,
-							treeObjectNamePlural,
-							treeEdgesRelationshipName,
-							treeEdgesRelationshipId,
-							sourceRelationId,
-							targetRelationId,
-							edgeLabel
-						)
-					}
-					accordionService={
-						new AccordionService(
-							portalBaseUrl,
-							nodeObjectNamePlural,
-							accordionObjectName,
-							accordionObjectNamePlural,
-							nodeAccordionsId,
-							accordionHeading,
-							accordionContent
-						)
-					}
-				/>
-			</ReactFlowProvider>
+			<FlowNavigator
+				treeERC={treeERC}
+				treeService={new TreeService(portalBaseUrl, treeObjectNamePlural, treeLabel)}
+				nodeService={
+					new NodeService(
+						portalBaseUrl,
+						nodeObjectNamePlural,
+						treeObjectNamePlural,
+						treeNodesRelationshipName,
+						treeNodesRelationshipId,
+						nodeTitle,
+						nodeText,
+						nodeImage,
+						nodeRoot,
+						xPosition,
+						yPosition
+					)
+				}
+				edgeService={
+					new EdgeService(
+						portalBaseUrl,
+						edgeObjectNamePlural,
+						treeObjectNamePlural,
+						treeEdgesRelationshipName,
+						treeEdgesRelationshipId,
+						sourceRelationId,
+						targetRelationId,
+						edgeLabel
+					)
+				}
+				accordionService={
+					new AccordionService(
+						portalBaseUrl,
+						nodeObjectNamePlural,
+						accordionObjectName,
+						accordionObjectNamePlural,
+						nodeAccordionsId,
+						accordionHeading,
+						accordionContent
+					)
+				}
+			/>
 		);
 	}
 }
 
-const GRAPH_EDITOR_ELEMENT_ID = 'graph-editor';
+const FLOW_NAVIGATOR_ELEMENT_ID = 'flow-navigator';
 
-if (!customElements.get(GRAPH_EDITOR_ELEMENT_ID)) {
-	customElements.define(GRAPH_EDITOR_ELEMENT_ID, GraphEditorWebComponent);
+if (!customElements.get(FLOW_NAVIGATOR_ELEMENT_ID)) {
+	customElements.define(FLOW_NAVIGATOR_ELEMENT_ID, FlowNavigatorWebComponent);
 }

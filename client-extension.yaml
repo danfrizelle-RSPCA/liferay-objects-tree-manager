@@ -8,7 +8,7 @@ flow-editor-import-maps-entry:
     type: jsImportMapsEntry
     url: assets/flow-editor-*.js
 flow-editor-custom-element-css:
-    url: assets/flow-editor-*.css
+    url: assets/flow-editor.css
     type: globalCSS
     name: Flow Editor CSS
 
@@ -18,7 +18,7 @@ flow-navigator-import-maps-entry:
     type: jsImportMapsEntry
     url: assets/flow-navigator-*.js
 flow-navigator-custom-element-css:
-    url: assets/flow-navigator-*.css
+    url: assets/flow-navigator.css
     type: globalCSS
     name: Flow Navigator CSS
 flow-navigator-user-agent:

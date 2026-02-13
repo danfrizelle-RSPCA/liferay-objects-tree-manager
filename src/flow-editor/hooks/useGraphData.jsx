@@ -5,7 +5,7 @@ import {
   } from '@xyflow/react';
 
 /* Hook: useGraphData
-Purpose: manage React Flow nodes/edges for the editable GraphEditor.
+Purpose: manage React Flow nodes/edges for the editable FlowEditor.
 - uses `useNodesState` / `useEdgesState` from @xyflow/react
 - exposes `loadGraphData(treeId, setLoading)` to fetch nodes then edges, updates state, and calls `fitView()` to center the graph
 - exposes `wipeGraphData()` to clear the canvas when no treeId is set */

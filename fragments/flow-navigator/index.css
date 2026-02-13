@@ -50,7 +50,7 @@
 
 /* Pre-React inline skeleton shown from fragment HTML.
    It is hidden once the web component sets data-react-mounted="true". */
-graph-navigator[data-react-mounted="true"] .aj-preload {
+flow-navigator[data-react-mounted="true"] .aj-preload {
 	display: none;
 }
 

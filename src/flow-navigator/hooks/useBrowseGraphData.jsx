@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 
 /* Hook: useBrowseGraphData
-Purpose: provide a lightweight, read-only data loader used by `GraphNavigator`.
+Purpose: provide a lightweight, read-only data loader used by `FlowNavigator`.
 It accepts configured service instances and exposes `startNodeId`, `nodes`, `edges` and a `loadGraphData` function which receives `treeERC` and a `setLoading` callback.
 
 Behavior notes:
@@ -31,7 +31,7 @@ export const useBrowseGraphData = (
       /* 1) resolve tree ERC -> tree id
        2) fetch nodes for the tree id
        3) fetch edges for the tree id
-       Note: accordion data is fetched on navigation to a node (see GraphNavigator). */
+       Note: accordion data is fetched on navigation to a node (see FlowNavigator). */
 
       treeService
         .getTree(treeERC)

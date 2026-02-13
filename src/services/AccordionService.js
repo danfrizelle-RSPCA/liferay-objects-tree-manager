@@ -2,7 +2,7 @@ import ApiService from './ApiService';
 /* AccordionService: encapsulates CRUD operations for accordion objects.
 
 Constructor takes a set of field/object names so the same class can be reused for different Liferay object schemas.
-Example usage (from `src/graph-editor-index.jsx` / `src/graph-navigator-index.jsx`):
+Example usage (from `src/flow-editor-index.jsx` / `src/flow-navigator-index.jsx`):
 new AccordionService(portalBaseUrl, accordionObjectNamePlural, nodeObjectNamePlural, nodeAccordionsId, accordionHeading, accordionContent) */
 class AccordionService {
 

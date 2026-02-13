@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useBrowseGraphData } from "./hooks/useBrowseGraphData";
 import { useNodeAccordions } from "./hooks/useNodeAccordions";
 import DecisionScreen from "./components/DecisionScreen";
-import "./GraphNavigator.css";
+import "./FlowNavigator.css";
 
-function GraphNavigator(props) {
+function FlowNavigator(props) {
   const [loading, setLoading] = useState(true);
   const [currentNodeId, setCurrentNodeId] = useState(null);
   const [history, setHistory] = useState([]);
@@ -89,4 +89,4 @@ function GraphNavigator(props) {
   );
 }
 
-export default GraphNavigator;
+export default FlowNavigator;
