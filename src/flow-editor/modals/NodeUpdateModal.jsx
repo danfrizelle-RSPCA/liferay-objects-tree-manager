@@ -19,6 +19,7 @@ function NodeUpdateModal(props) {
   const [nodeTitle, setNodeTitle] = useState("");
   const [nodeText, setNodeText] = useState("");
   const [nodeImage, setNodeImage] = useState(null);
+  const [nodeYouTubeID, setNodeYouTubeID] = useState("");
   const [nodeRoot, setNodeRoot] = useState(false);
   const [accordions, setAccordions] = useState([]);
   const [accordionLoading, setAccordionLoading] = useState(false);
@@ -30,6 +31,7 @@ function NodeUpdateModal(props) {
     setNodeTitle(props.nodeTitle);
     setNodeText(props.nodeText);
     setNodeImage(props.nodeImage);
+    setNodeYouTubeID(props.nodeYouTubeID);
     setNodeRoot(props.nodeRoot);
     // load accordions for current node if accordionService provided
     if (props.accordionService && props.currentNode && props.currentNode.id) {
@@ -65,6 +67,7 @@ function NodeUpdateModal(props) {
     props.nodeTitle,
     props.nodeText,
     props.nodeImage,
+    props.nodeYouTubeID,
     props.nodeRoot,
     props.currentNode,
     props.accordionService
@@ -84,6 +87,8 @@ function NodeUpdateModal(props) {
           nodeImageValue={nodeImage?.link?.href || ''}
           imagePlaceholder="Select an image from Documents and Media"
           nodeImageReadOnly={true}
+          nodeYouTubeID={nodeYouTubeID}
+          setNodeYouTubeID={setNodeYouTubeID}
         />
 
         <AccordionEditor
@@ -189,7 +194,7 @@ function NodeUpdateModal(props) {
                 }
 
                 // Persist node changes
-                props.onNodeUpdate(nodeTitle, nodeText, nodeImage);
+                props.onNodeUpdate(nodeTitle, nodeText, nodeImage, nodeYouTubeID);
                 onOpenChange(false);
               }}
             >

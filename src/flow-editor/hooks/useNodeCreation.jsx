@@ -40,12 +40,13 @@ export const useNodeCreation = (
     setNodeCreationModalOpen(false);
   };
 
-  const handleNodeCreation = async (edgeLabel, nodeTitle, nodeText, nodeImage) => {
+  const handleNodeCreation = async (edgeLabel, nodeTitle, nodeText, nodeImage, nodeYouTubeID) => {
     const newNodeData = await nodeService.createNode(
       treeId,
       nodeTitle,
       nodeText,
       nodeImage,
+      nodeYouTubeID,
       xPosition,
       yPosition
     );
@@ -62,6 +63,7 @@ export const useNodeCreation = (
         nodeTitle: nodeTitle,
         nodeText: nodeText,
         nodeImage: nodeImage,
+        nodeYouTubeID: nodeYouTubeID,
         id: newNodeData.id,
       },
     };

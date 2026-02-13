@@ -20,6 +20,7 @@ function NodeCreationModal(props) {
   const [nodeTitle, setNodeTitle] = useState('');
   const [nodeText, setNodeText] = useState('');
   const [nodeImage, setNodeImage] = useState('');
+  const [nodeYouTubeID, setNodeYouTubeID] = useState('');
 
   const [accordions, setAccordions] = useState([]);
   const [accordionSaving, setAccordionSaving] = useState(false);
@@ -37,6 +38,7 @@ function NodeCreationModal(props) {
     setNodeTitle('');
     setNodeText('');
     setNodeImage('');
+    setNodeYouTubeID('');
     setAccordions([]);
   };
 
@@ -44,7 +46,7 @@ function NodeCreationModal(props) {
     // Create the node (+ edge) first so we have a node id for accordion creation.
     setAccordionSaving(true);
     try {
-      const createdNode = await props.onNodeCreation(edgeLabel, nodeTitle, nodeText, nodeImage);
+      const createdNode = await props.onNodeCreation(edgeLabel, nodeTitle, nodeText, nodeImage, nodeYouTubeID);
 
       const createdNodeId = createdNode?.id ?? createdNode?.nodeId;
 
@@ -108,6 +110,8 @@ function NodeCreationModal(props) {
               imagePlaceholder="Insert an image URL"
               nodeImageReadOnly={true}
               onNodeImageChange={handleNodeImageChange}
+              nodeYouTubeID={nodeYouTubeID}
+              setNodeYouTubeID={setNodeYouTubeID}
             />
 
             <AccordionEditor

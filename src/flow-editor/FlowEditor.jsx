@@ -309,6 +309,7 @@ function FlowEditor(props) {
         nodeTitle={currentNode ? currentNode.data.nodeTitle : ""}
         nodeText={currentNode ? currentNode.data.nodeText : ""}
         nodeImage={currentNode ? currentNode.data.nodeImage : ""}
+        nodeYouTubeID={currentNode ? currentNode.data.nodeYouTubeID : ""}
         outgoingEdgeCount={
           currentNode
             ? edges.filter((edge) => edge.source === currentNode.id).length

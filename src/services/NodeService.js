@@ -4,10 +4,10 @@ import ApiService from './ApiService';
 
 Constructor takes a set of field/object names so the same class can be reused for different Liferay object schemas.
 Example usage (from `src/flow-editor-index.jsx` / `src/flow-navigator-index.jsx`):
-new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage,nodeRoot, xPosition, yPosition) */
+new NodeService(portalBaseUrl, nodeObjectNamePlural, treeObjectNamePlural, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeYouTubeID, nodeRoot, xPosition, yPosition) */
 class NodeService {
 
-    constructor(baseURL, nodeObjectName, treeObjectName, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeRoot, xPosition, yPosition) {
+    constructor(baseURL, nodeObjectName, treeObjectName, treeNodesRelationshipName, treeNodesRelationshipId, nodeTitle, nodeText, nodeImage, nodeYouTubeID, nodeRoot, xPosition, yPosition) {
         this.baseURL = baseURL;
         this.nodeObjectName = nodeObjectName;
         this.treeObjectName = treeObjectName;
@@ -16,6 +16,7 @@ class NodeService {
         this.nodeTitle = nodeTitle;
         this.nodeText = nodeText;
         this.nodeImage = nodeImage;
+        this.nodeYouTubeID = nodeYouTubeID;
         this.nodeRoot = nodeRoot;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -35,13 +36,14 @@ class NodeService {
     // getNodes: fetch nodes for a given tree id and map fields into a normalized shape used by the UI (including position fields).
     getNodes(treeId) {
 
-        return ApiService.makeCall(this.baseURL + this.treeObjectName + "/" + treeId + "/" + this.treeNodesRelationshipName + "/?pageSize=500&fields=id%2C" + this.nodeRoot + "%2C"+ this.nodeTitle + "%2C" + this.nodeText + "%2C" + this.nodeImage + "%2C" + this.xPosition + "%2C" + this.yPosition, "GET").then(data => {
-            console.log(`Dans test: ` + this.baseURL + this.treeObjectName + "/" + treeId + "/" + this.treeNodesRelationshipName + "/?pageSize=500&fields=id%2C" + this.nodeRoot + "%2C"+ this.nodeTitle + "%2C" + this.nodeText + "%2C" + this.nodeImage + "%2C" + this.xPosition + "%2C" + this.yPosition);
+        return ApiService.makeCall(this.baseURL + this.treeObjectName + "/" + treeId + "/" + this.treeNodesRelationshipName + "/?pageSize=500&fields=id%2C" + this.nodeRoot + "%2C"+ this.nodeTitle + "%2C" + this.nodeText + "%2C" + this.nodeImage + "%2C" + this.nodeYouTubeID + "%2C" + this.xPosition + "%2C" + this.yPosition, "GET").then(data => {
+            console.log(`Dans test: ` + this.baseURL + this.treeObjectName + "/" + treeId + "/" + this.treeNodesRelationshipName + "/?pageSize=500&fields=id%2C" + this.nodeRoot + "%2C"+ this.nodeTitle + "%2C" + this.nodeText + "%2C" + this.nodeImage + "%2C" + this.nodeYouTubeID + "%2C" + this.xPosition + "%2C" + this.yPosition);
             return data.items.map(item => ({
                 id: item.id,
                 nodeTitle: item[this.nodeTitle],
                 nodeText: item[this.nodeText],
                 nodeImage: item[this.nodeImage],
+                nodeYouTubeID: item[this.nodeYouTubeID],
                 nodeRoot: item[this.nodeRoot],
                 xPosition: item[this.xPosition] ?? 0,
                 yPosition: item[this.yPosition] ?? 0
@@ -50,13 +52,14 @@ class NodeService {
 
     }
 
-    createNode(treeId, nodeTitle, nodeText, nodeImage, xPosition, yPosition) {
+    createNode(treeId, nodeTitle, nodeText, nodeImage, nodeYouTubeID, xPosition, yPosition) {
         
         const body = {
             [this.treeNodesRelationshipId]: treeId,
             [this.nodeTitle]: nodeTitle,
             [this.nodeText]: nodeText,
             [this.nodeImage]: nodeImage,
+            [this.nodeYouTubeID]: nodeYouTubeID,
             [this.nodeRoot]: false,
             [this.xPosition]: xPosition,
             [this.yPosition]: yPosition
@@ -67,6 +70,7 @@ class NodeService {
                 nodeTitle: data[this.nodeTitle],
                 nodeText: data[this.nodeText],
                 nodeImage: data[this.nodeImage],
+                nodeYouTubeID: data[this.nodeYouTubeID],
                 xPosition: data[this.xPosition] ?? 0,
                 yPosition: data[this.yPosition] ?? 0
             }
@@ -74,12 +78,13 @@ class NodeService {
 
     }
 
-    updateNode(nodeId, nodeTitle, nodeText, nodeImage) {
+    updateNode(nodeId, nodeTitle, nodeText, nodeImage, nodeYouTubeID) {
 
         const body = {
             [this.nodeTitle]: nodeTitle,
             [this.nodeText]: nodeText,
-            [this.nodeImage]: nodeImage
+            [this.nodeImage]: nodeImage,
+            [this.nodeYouTubeID]: nodeYouTubeID
         };
 
         return ApiService.makeCall(this.baseURL + this.nodeObjectName + "/" + nodeId, "PATCH", body);

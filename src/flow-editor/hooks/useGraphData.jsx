@@ -37,6 +37,7 @@ export const useGraphData = (nodeService, edgeService, fitView) => {
           nodeTitle: node.nodeTitle,
           nodeText: node.nodeText,
           nodeImage: node.nodeImage,
+          nodeYouTubeID: node.nodeYouTubeID,
           nodeRoot: node.nodeRoot,
           treeId: treeId,
           id: node.id

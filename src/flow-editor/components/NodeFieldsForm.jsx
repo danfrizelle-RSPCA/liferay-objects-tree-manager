@@ -16,6 +16,8 @@ function NodeFieldsForm(props) {
     nodeImageReadOnly = true,
     onNodeImageChange,
     imagePlaceholder,
+    nodeYouTubeID,
+    setNodeYouTubeID,
   } = props;
 
   return (
@@ -47,10 +49,21 @@ function NodeFieldsForm(props) {
         <label htmlFor="nodeImage">Image</label>
         <ClayInput
           id="nodeImage"
-          placeholder={imagePlaceholder}
+  D        placeholder={imagePlaceholder}
           value={nodeImageValue}
           readOnly={nodeImageReadOnly}
           onChange={onNodeImageChange}
+        />
+      </ClayForm.Group>
+
+      <ClayForm.Group>
+        <label htmlFor="nodeYouTubeID">YouTube ID</label>
+        <ClayInput
+          id="nodeYouTubeID"
+          placeholder="Enter a YouTube ID here"
+          value={nodeYouTubeID || ''}
+          onChange={(e) => setNodeYouTubeID && setNodeYouTubeID(e.target.value)}
+          type="text"
         />
       </ClayForm.Group>
     </>

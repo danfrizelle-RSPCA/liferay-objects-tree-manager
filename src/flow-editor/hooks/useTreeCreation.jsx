@@ -20,7 +20,7 @@ export const useTreeCreation = (treeService, nodeService, loadTreeData, loadGrap
             const treeId = await treeService.createTree(treeName);
 
             // Ensure a new tree always starts with at least one node.
-            const node = await nodeService.createNode(treeId, "Root", "Change me", "", 0, 0);
+            const node = await nodeService.createNode(treeId, "Root", "Change me", "", "", 0, 0);
             await nodeService.setNodeAsStart(node.id);
 
             loadTreeData(treeId);

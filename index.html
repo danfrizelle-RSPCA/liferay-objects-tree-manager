@@ -79,12 +79,14 @@
     bibendum elit.</p> -->
   <!-- Flow Navigator Component (for local use) -->
    <script type="module" src="/src/flow-navigator-index.jsx"></script>
-  <flow-navigator portal-base-url="http://localhost:8080/o/c/" tree-erc="6442d65a-0e44-fc4a-90b3-69bbc99186e9">
-    <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
-    <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
-    <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
-    <accordion object-name="accordion" object-name-plural="accordions" label="label" node-accordions-id="r_accordion_c_nodeId" heading="heading" content="content" />
-  </flow-navigator>
+   <div class="container">
+     <flow-navigator portal-base-url="http://localhost:8080/o/c/" tree-erc="6442d65a-0e44-fc4a-90b3-69bbc99186e9">
+       <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
+       <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" youtube-id="youTubeID" root="root" x="xCoordinates" y="yCoordinates" />
+       <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
+       <accordion object-name="accordion" object-name-plural="accordions" label="label" node-accordions-id="r_accordion_c_nodeId" heading="heading" content="content" />
+     </flow-navigator>
+   </div>
 
   <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna
     aliqua.
@@ -101,13 +103,13 @@
     Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac,
     ultricies eu, pede.</p> -->
 
-  <!-- Flow Editor Component (for local use) --
+  <!-- Flow Editor Component (for local use)
    <script type="module" src="/src/flow-editor-index.jsx"></script>
     <flow-editor
         portal-base-url="http://localhost:8080/o/c/"
     >
       <tree object-name="tree" object-name-plural="trees" label="label" node-belongs-relationship="nodeBelongs" edge-belongs-relationship="edgeBelongs" />
-      <node object-name="node" object-name-plural="nodes" label="label" text="body" image="image" root="root" x="xCoordinates" y="yCoordinates" />
+      <node object-name="node" object-name-plural="nodes" label="label" text="body" root="root" image="image" youtube-id="youTubeID" x="xCoordinates" y="yCoordinates" />
       <edge object-name="edge" object-name-plural="edges" label="label" source-relationship="source" target-relationship="target" />
       <accordion object-name="accordion" object-name-plural="accordions" label="label" node-accordions-id="r_accordion_c_nodeId" heading="heading" content="content" />
     </flow-editor> -->

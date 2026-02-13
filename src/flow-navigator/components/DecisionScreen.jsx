@@ -59,6 +59,10 @@ export default function DecisionScreen({
     ? "http://localhost:8080" + node.nodeImage.link.href
     : null;
 
+  const youTubeID = node.nodeYouTubeID
+    ? `${node.nodeYouTubeID}`.trim()
+    : "";
+
   const handleBack = () => {
     scrollToTop();
     onBack();
@@ -179,12 +183,24 @@ export default function DecisionScreen({
         </div>
 
         <div className="col-md-5 p-0">
-          {imageSrc && (
-            <img
-              src={imageSrc}
-              alt={node.nodeImage?.link?.label ?? ""}
-              className="ds-img"
-            />
+          {youTubeID ? (
+            <iframe
+              width="100%"
+              height="315"
+              src={`https://www.youtube.com/embed/${youTubeID}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            imageSrc && (
+              <img
+                src={imageSrc}
+                alt={node.nodeImage?.link?.label ?? ""}
+                className="ds-img"
+              />
+            )
           )}
         </div>
       </div>

@@ -54,6 +54,7 @@ export const useBrowseGraphData = (
               nodeTitle: node.nodeTitle,
               nodeText: node.nodeText,
               nodeImage: node.nodeImage,
+              nodeYouTubeID: node.nodeYouTubeID,
               nodeRoot: node.nodeRoot,
             }));
             setNodes(initialNodes);

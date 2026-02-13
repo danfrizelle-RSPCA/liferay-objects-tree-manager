@@ -50,7 +50,7 @@ export const useNodeUpdate = (nodeService, nodes, setNodes) => {
 
     }
 
-    const handleNodeUpdate = (nodeTitle, nodeText, nodeImage) => {
+    const handleNodeUpdate = (nodeTitle, nodeText, nodeImage, nodeYouTubeID) => {
 
         if (currentNode) {
             const updatedNodes = nodes.map((node) => {
@@ -61,14 +61,15 @@ export const useNodeUpdate = (nodeService, nodes, setNodes) => {
                         ...node.data,  // Keep other properties in data intact
                         nodeTitle: nodeTitle, 
                         nodeText: nodeText,
-                        nodeImage: nodeImage
+                        nodeImage: nodeImage,
+                        nodeYouTubeID: nodeYouTubeID
                     }
                 };
               }
               return node;
             });
 
-            nodeService.updateNode(currentNode.id, nodeTitle, nodeText, nodeImage);
+            nodeService.updateNode(currentNode.id, nodeTitle, nodeText, nodeImage, nodeYouTubeID);
             setNodes(updatedNodes);
           }
 

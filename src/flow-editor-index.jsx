@@ -61,6 +61,7 @@ class FlowEditorWebComponent extends HTMLElement {
 		const nodeTitle = nodeEl.getAttribute('label');
 		const nodeText = nodeEl.getAttribute('text');
 		const nodeImage = nodeEl.getAttribute('image');
+		const nodeYouTubeID = nodeEl.getAttribute('youtube-id');
 		const nodeRoot = nodeEl.getAttribute('root');
 		const xPosition = nodeEl.getAttribute('x');
 		const yPosition = nodeEl.getAttribute('y');
@@ -105,6 +106,7 @@ class FlowEditorWebComponent extends HTMLElement {
 							nodeTitle,
 							nodeText,
 							nodeImage,
+							nodeYouTubeID,
 							nodeRoot,
 							xPosition,
 							yPosition
